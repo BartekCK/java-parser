@@ -1,0 +1,54 @@
+* nazwiska, imiona, adresy mailowe oraz numery grup członków zespołu,
+Beata Kozieł: beatainez.k@gmail.com, 1ID21A
+Bartłomiej Kotarski: bkotarski1@gmail.com, 1ID21A
+
+* temat projektu,
+Konwersja między formatami
+Celem projektu jest opracowanie narzędzia do automatycznej konwersji pomiędzy różnymi formatami XML, JSON, CSV i YAML.
+
+* spis technologii, które będą używane (systemów, języków programowania, najważniejszych bibliotek, frameworków, itp.)
+Backend: Java, Spring Framework
+Frontend: TypeScript, React.js, Styled Components, Nginx
+
+* realistyczny harmonogram pracy wraz z listą funkcjonalności, które zostaną zaimplementowane,
+26.03.2021 - Przygotowanie środowisk uruchomieniowych, wstępna konfiguracja dla konteneryzacji, projekt UI i API.
+09.03.2021 - Nawiązanie połączenia z pamięciową bazą danych Redis i wstępny projekt klucz: wartość
+16.04.2021 - Utworzenie warstwy logicznej dla zapytań http (kontrolery)
+23.04.2021 - Utworzenie warstwy logicznej dla wykonywanych konwersji (serwisy, helpery i modele)
+30.04.2021 - Utworzenie interfejsu graficznego z React.js
+07.05.2021 - Połączenie części statycznej z Rest API
+14.05.2021 - Testy jednostkowe
+28.05.2021 - Wdrożenie aplikacji (AWS bądź VPN)
+
+* podział prac w zespole,
+Beata:
+Konfiguracja środowiska dla API + Redis w kontenerze dockera
+Nawiązanie połączenia z Redis-em
+Utworzenie kontrolerów
+Wszystkie pary konwersji z CSV
+Wszystkie pary konwersji z JSON
+Wyświetlanie listy ostatnich działań + połączenie z API (UI)
+Testy
+Wdrożenie backendu
+
+Bartłomiej:
+Konfiguracja środowiska dla SPA + Nginx w kontenerze dockera
+Projekt i implementacja klucz - wartość dla Redis-a
+Serwisy pamięciowy
+Wszystkie pary konwersji z XML
+Wszystkie pary konwersji z YAML
+Utworzenie edytora, do wklejania edytowanych fragmentów + połączenie z API (UI)
+Testy
+Wdrożenie frontendu
+
+* temat projektu z przedmiotu "Programowanie systemów rozproszonych", tematy prac inżynierskich i (jeżeli są znane, to również) magisterskich studentów realizujących projekt.
+Programowanie systemów rozproszonych:
+Beata: “Cloud drive”
+Bartłomiej: “Cloud drive”
+Tematy prac inżynierskich:
+Beata: “Opracowanie i implementacja platformy internetowej służącej do organizacji interakcji i spędzania wolnego czasu dla mieszkańców Kielc i okolic.”
+Bartłomiej: “Projekt i implementacja aplikacji internetowej do prowadzenia spotkań online z wykorzystaniem modelu komunikacji peer-to-peer oraz technologii websocket”
+Tematy prac magisterskich:
+Beata: nieznany
+Bartłomiej: nieznany
+
