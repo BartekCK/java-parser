@@ -5,3 +5,10 @@ services:
     build: ./frontend
     ports:
       - "80:80"
+  redis:
+    image: redis:6.0.9
+    expose:
+      - 6379
+    ports:
+      - published: 6379
+        target: 6379
