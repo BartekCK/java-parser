@@ -37,10 +37,6 @@ module.exports = {
         }),
         new CleanWebpackPlugin(),
     ],
-    // resolve: {
-    //     modules: [path.resolve(__dirname, './node_modules'), path.resolve(__dirname, './src')],
-    //     extensions: ['.js', '.jsx', '.json'],
-    // },
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
     },
