@@ -40,19 +40,6 @@ module.exports = {
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
     },
-    plugins: [
-        new ForkTsCheckerWebpackPlugin({
-            async: false,
-            eslint: {
-                files: './src/**/*',
-            },
-        }),
-        new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, 'public', 'index.html'),
-            favicon: 'public/favicon.png',
-        }),
-        new CleanWebpackPlugin(),
-    ],
     optimization: {
         splitChunks: {
             chunks: 'all',
