@@ -32,15 +32,21 @@ module.exports = {
                     loader: 'babel-loader',
                 },
             },
+            {
+                test: /\.s[ac]ss$/i,
+                use: ['style-loader', 'css-loader', 'sass-loader'],
+            },
+            {
+                test: /\.(png|jpe?g|gif|svg)$/i,
+                use: [
+                    {
+                        loader: 'file-loader',
+                    },
+                ],
+            },
         ],
     },
     plugins: [
-        new ForkTsCheckerWebpackPlugin({
-            async: false,
-            eslint: {
-                files: './src/**/*',
-            },
-        }),
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, 'public', 'index.html'),
             favicon: 'public/favicon.png',

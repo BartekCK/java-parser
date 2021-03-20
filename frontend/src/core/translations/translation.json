@@ -1,0 +1,16 @@
+{
+  "pl": {
+    "translation": {
+      "common": {
+        "editor": "Edytor"
+      }
+    }
+  },
+  "en": {
+    "translation": {
+      "common": {
+        "editor": "Editor"
+      }
+    }
+  }
+}

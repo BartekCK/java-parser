@@ -1,0 +1,13 @@
+.navigation--container {
+  margin: 0;
+  padding: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  > .navigation {
+    margin: 0;
+    display: flex;
+    list-style: none;
+  }
+}
