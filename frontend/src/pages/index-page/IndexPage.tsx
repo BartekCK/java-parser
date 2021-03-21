@@ -5,7 +5,9 @@ import { useParams } from 'react-router-dom';
 
 // components
 import Header from '../../containers/header';
-import DownloadPlace from '../../components/download-place';
+import UploadContainer from '../../containers/upload-container';
+import EditorContainer from '../../containers/editor-container';
+import ActivityContainer from '../../containers/activity-container';
 
 // types
 import { IRefWrapper, IRoute } from '../../core/types';
@@ -20,9 +22,9 @@ const IndexPage = React.forwardRef((props, wrapperRef: React.RefObject<IRefWrapp
     return (
         <div ref={wrapperRef.current?.homeRef}>
             <Header />
-            <DownloadPlace ref={wrapperRef.current?.uploadRef} />
-            <DownloadPlace ref={wrapperRef.current?.editorRef} />
-            <DownloadPlace ref={wrapperRef.current?.activityRef} />
+            <UploadContainer ref={wrapperRef.current?.uploadRef} />
+            <EditorContainer ref={wrapperRef.current?.editorRef} />
+            <ActivityContainer ref={wrapperRef.current?.activityRef} />
         </div>
     );
 });
