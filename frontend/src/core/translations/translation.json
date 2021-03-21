@@ -5,7 +5,8 @@
         "editor": "Edytor",
         "lastActivity": "Aktywność",
         "upload": "Wybierz pliki"
-      }
+      },
+      "header": "Konwertuj szybko i łatwo pliki bądź kod pomiędzy wybranymi formatami"
     }
   },
   "en": {
@@ -14,7 +15,8 @@
         "editor": "Editor",
         "lastActivity": "Last Activity",
         "upload": "Upload"
-      }
+      },
+      "header": "Convert files or code quickly and easily between selected formats"
     }
   }
 }
