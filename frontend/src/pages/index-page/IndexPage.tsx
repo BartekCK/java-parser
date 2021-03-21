@@ -4,12 +4,13 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 
 // components
-import Header from '../../components/header';
+import Header from '../../containers/header';
+import DownloadPlace from '../../components/download-place';
 
 // types
-import { IRoute } from '../../core/types';
+import { IRefWrapper, IRoute } from '../../core/types';
 
-const IndexPage: React.FC = () => {
+const IndexPage = React.forwardRef((props, wrapperRef: React.RefObject<IRefWrapper>) => {
     const params: IRoute = useParams();
 
     React.useEffect(() => {
@@ -17,10 +18,13 @@ const IndexPage: React.FC = () => {
     }, [params]);
 
     return (
-        <div>
+        <div ref={wrapperRef.current?.homeRef}>
             <Header />
+            <DownloadPlace ref={wrapperRef.current?.uploadRef} />
+            <DownloadPlace ref={wrapperRef.current?.editorRef} />
+            <DownloadPlace ref={wrapperRef.current?.activityRef} />
         </div>
     );
-};
+});
 
 export default IndexPage;

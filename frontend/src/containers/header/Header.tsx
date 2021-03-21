@@ -1,7 +1,7 @@
 import React from 'react';
 
 // components
-import Carousel from '../carousel';
+import Carousel from '../../components/carousel';
 
 // hooks
 import { useTranslation } from 'react-i18next';

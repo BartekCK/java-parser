@@ -6,34 +6,72 @@ import LanguageSwitcher from '../../components/language-switcher';
 
 // hooks
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 
 // styles
 import './styles.scss';
+import { IRefWrapper } from '../../core/types';
 
-const Navigation: React.FC = () => {
+const Navigation = React.forwardRef((props, wrapperRef: React.RefObject<IRefWrapper>) => {
     const { t } = useTranslation();
+
+    const history = useHistory();
+
+    const handleScroll = () => {
+        const currentOffset: number = window.scrollY;
+        const objOfHtmlDiv: IRefWrapper | null = wrapperRef.current;
+        if (!objOfHtmlDiv) {
+            return;
+        }
+        const { homeRef, activityRef, editorRef, uploadRef } = objOfHtmlDiv;
+        if (!homeRef.current || !activityRef.current || !editorRef.current || !uploadRef.current) {
+            return;
+        }
+        switch (true) {
+            case currentOffset >= 0 && currentOffset < uploadRef.current.offsetTop:
+                history.push('/');
+                break;
+            case currentOffset >= uploadRef.current.offsetTop && currentOffset < editorRef.current.offsetTop:
+                history.push('/upload');
+                break;
+            case currentOffset >= editorRef.current.offsetTop && currentOffset < activityRef.current.offsetTop:
+                history.push('/editor');
+                break;
+            case currentOffset >= activityRef.current.offsetTop:
+                history.push('/last');
+                break;
+        }
+    };
+
+    React.useEffect(() => {
+        document.addEventListener('scroll', handleScroll);
+    }, []);
 
     return (
         <nav className="navigation--container">
             <ul className="navigation">
                 <li>
-                    <NavElement routeName="/" name="Parser">
+                    <NavElement routeName="/" name="Parser" ref={wrapperRef.current?.homeRef}>
                         <i className="fa fa-home" aria-hidden="true" style={{ padding: '0 5px' }} />
                     </NavElement>
                 </li>
                 <li>
-                    <NavElement routeName="/upload" name={t('common.upload')} />
+                    <NavElement routeName="/upload" name={t('common.upload')} ref={wrapperRef.current?.uploadRef} />
                 </li>
                 <li>
-                    <NavElement routeName="/editor" name={t('common.editor')} />
+                    <NavElement routeName="/editor" name={t('common.editor')} ref={wrapperRef.current?.editorRef} />
                 </li>
                 <li>
-                    <NavElement routeName="/last" name={t('common.lastActivity')} />
+                    <NavElement
+                        routeName="/last"
+                        name={t('common.lastActivity')}
+                        ref={wrapperRef.current?.activityRef}
+                    />
                 </li>
             </ul>
             <LanguageSwitcher />
         </nav>
     );
-};
+});
 
 export default Navigation;
