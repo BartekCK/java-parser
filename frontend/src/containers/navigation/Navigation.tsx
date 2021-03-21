@@ -8,9 +8,14 @@ import LanguageSwitcher from '../../components/language-switcher';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 
+// custom hooks
+import useScroll from '../../hooks/useScroll';
+
+// types
+import { IRefWrapper } from '../../core/types';
+
 // styles
 import './styles.scss';
-import { IRefWrapper } from '../../core/types';
 
 const Navigation = React.forwardRef((props, wrapperRef: React.RefObject<IRefWrapper>) => {
     const { t } = useTranslation();
@@ -43,9 +48,7 @@ const Navigation = React.forwardRef((props, wrapperRef: React.RefObject<IRefWrap
         }
     };
 
-    React.useEffect(() => {
-        document.addEventListener('scroll', handleScroll);
-    }, []);
+    useScroll(handleScroll);
 
     return (
         <nav className="navigation--container">
@@ -56,14 +59,14 @@ const Navigation = React.forwardRef((props, wrapperRef: React.RefObject<IRefWrap
                     </NavElement>
                 </li>
                 <li>
-                    <NavElement routeName="/upload" name={t('common.upload')} ref={wrapperRef.current?.uploadRef} />
+                    <NavElement routeName="/" name={t('common.upload')} ref={wrapperRef.current?.uploadRef} />
                 </li>
                 <li>
-                    <NavElement routeName="/editor" name={t('common.editor')} ref={wrapperRef.current?.editorRef} />
+                    <NavElement routeName="/" name={t('common.editor')} ref={wrapperRef.current?.editorRef} />
                 </li>
                 <li>
                     <NavElement
-                        routeName="/last"
+                        routeName="/"
                         name={t('common.lastActivity')}
                         ref={wrapperRef.current?.activityRef}
                     />

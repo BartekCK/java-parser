@@ -8,6 +8,7 @@ import Header from '../../containers/header';
 import UploadContainer from '../../containers/upload-container';
 import EditorContainer from '../../containers/editor-container';
 import ActivityContainer from '../../containers/activity-container';
+import GoUp from '../../components/go-up';
 
 // types
 import { IRefWrapper, IRoute } from '../../core/types';
@@ -20,11 +21,12 @@ const IndexPage = React.forwardRef((props, wrapperRef: React.RefObject<IRefWrapp
     }, [params]);
 
     return (
-        <div ref={wrapperRef.current?.homeRef}>
+        <div className="index--page" ref={wrapperRef.current?.homeRef}>
             <Header />
             <UploadContainer ref={wrapperRef.current?.uploadRef} />
             <EditorContainer ref={wrapperRef.current?.editorRef} />
             <ActivityContainer ref={wrapperRef.current?.activityRef} />
+            <GoUp ref={wrapperRef.current?.uploadRef} />
         </div>
     );
 });
