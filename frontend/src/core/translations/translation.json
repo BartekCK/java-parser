@@ -2,14 +2,18 @@
   "pl": {
     "translation": {
       "common": {
-        "editor": "Edytor"
+        "editor": "Edytor",
+        "lastActivity": "Aktywność",
+        "upload": "Wybierz pliki"
       }
     }
   },
   "en": {
     "translation": {
       "common": {
-        "editor": "Editor"
+        "editor": "Editor",
+        "lastActivity": "Last Activity",
+        "upload": "Upload"
       }
     }
   }

@@ -4,8 +4,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 // assets
-import EnglishFlag from '../../assets/en.png';
-import PolishFlag from '../../assets/pl.svg';
+import EnglishFlag from '../../assets/languages/en.png';
+import PolishFlag from '../../assets/languages/pl.svg';
 
 // styles
 import './styles.scss';

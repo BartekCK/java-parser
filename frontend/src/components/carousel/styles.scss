@@ -1,0 +1,38 @@
+.carousel--wrapper {
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  > .extension {
+    width: 90px;
+    height: auto;
+    opacity: 0;
+    position: absolute;
+    visibility: hidden;
+
+    &.-visible {
+      opacity: 1;
+      position: static;
+      visibility: visible;
+    }
+
+    transition: opacity 0.4s linear;
+  }
+
+  > .refresh {
+    margin: 0 20px;
+    font-size: 2.5rem;
+    animation: rotate 3s infinite;
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+

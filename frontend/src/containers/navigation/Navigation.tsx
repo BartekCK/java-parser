@@ -22,13 +22,13 @@ const Navigation: React.FC = () => {
                     </NavElement>
                 </li>
                 <li>
-                    <NavElement routeName="/upload" name="Upload" />
+                    <NavElement routeName="/upload" name={t('common.upload')} />
                 </li>
                 <li>
                     <NavElement routeName="/editor" name={t('common.editor')} />
                 </li>
                 <li>
-                    <NavElement routeName="/last" name="Last Activity" />
+                    <NavElement routeName="/last" name={t('common.lastActivity')} />
                 </li>
             </ul>
             <LanguageSwitcher />

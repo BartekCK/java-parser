@@ -1,5 +1,10 @@
 import React from 'react';
+
+// hooks
 import { useParams } from 'react-router-dom';
+
+// components
+import Header from '../../components/header';
 
 // types
 import { IRoute } from '../../core/types';
@@ -11,7 +16,11 @@ const IndexPage: React.FC = () => {
         console.log(params);
     }, [params]);
 
-    return <div>indexpage Ala ma kota</div>;
+    return (
+        <div>
+            <Header />
+        </div>
+    );
 };
 
 export default IndexPage;
