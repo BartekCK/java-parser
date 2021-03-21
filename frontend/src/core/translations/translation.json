@@ -6,6 +6,9 @@
         "lastActivity": "Aktywność",
         "upload": "Wybierz pliki"
       },
+      "message": {
+        "uploadLabel": "lub upuść pliki tutaj"
+      },
       "header": "Konwertuj szybko i łatwo pliki bądź kod pomiędzy wybranymi formatami"
     }
   },
@@ -14,7 +17,10 @@
       "common": {
         "editor": "Editor",
         "lastActivity": "Last Activity",
-        "upload": "Upload"
+        "upload": "Upload files"
+      },
+      "message": {
+        "uploadLabel": "or drop files here"
       },
       "header": "Convert files or code quickly and easily between selected formats"
     }

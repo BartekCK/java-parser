@@ -32,20 +32,20 @@ const Navigation = React.forwardRef((props, wrapperRef: React.RefObject<IRefWrap
         if (!homeRef.current || !activityRef.current || !editorRef.current || !uploadRef.current) {
             return;
         }
-        switch (true) {
-            case currentOffset >= 0 && currentOffset < uploadRef.current.offsetTop:
-                history.push('/');
-                break;
-            case currentOffset >= uploadRef.current.offsetTop && currentOffset < editorRef.current.offsetTop:
-                history.push('/upload');
-                break;
-            case currentOffset >= editorRef.current.offsetTop && currentOffset < activityRef.current.offsetTop:
-                history.push('/editor');
-                break;
-            case currentOffset >= activityRef.current.offsetTop:
-                history.push('/last');
-                break;
-        }
+        // switch (true) {
+        //     case currentOffset >= 0 && currentOffset < uploadRef.current.offsetTop:
+        //         history.push('/');
+        //         break;
+        //     case currentOffset >= uploadRef.current.offsetTop && currentOffset < editorRef.current.offsetTop:
+        //         history.push('/upload' );
+        //         break;
+        //     case currentOffset >= editorRef.current.offsetTop && currentOffset < activityRef.current.offsetTop:
+        //         history.push('/editor');
+        //         break;
+        //     case currentOffset >= activityRef.current.offsetTop:
+        //         history.push('/last');
+        //         break;
+        // }
     };
 
     useScroll(handleScroll);

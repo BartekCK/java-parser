@@ -3,11 +3,11 @@ import React from 'react';
 // components
 import Loader from '../../components/loader';
 
-// hooks
-import { useParams } from 'react-router-dom';
+// custom hooks
+import useQuery from '../../hooks/useQuery';
 
 // types
-import { IRefWrapper, IRoute } from '../../core/types';
+import { IRefWrapper } from '../../core/types';
 
 // lazy components
 const Header = React.lazy(() => import('../../containers/header'));
@@ -17,11 +17,11 @@ const ActivityContainer = React.lazy(() => import('../../containers/activity-con
 const GoUp = React.lazy(() => import('../../components/go-up'));
 
 const IndexPage = React.forwardRef((props, wrapperRef: React.RefObject<IRefWrapper>) => {
-    const params: IRoute = useParams();
+    const query = useQuery();
 
     React.useEffect(() => {
-        console.log(params);
-    }, [params]);
+        console.log(query.get('hash'));
+    }, [query]);
 
     return (
         <div className="index--page" ref={wrapperRef.current?.homeRef}>
