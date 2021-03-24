@@ -5,7 +5,8 @@
         "editor": "Edytor",
         "lastActivity": "Aktywność",
         "upload": "Wybierz pliki",
-        "okay": "Okej"
+        "okay": "Okej",
+        "convertTo": "Konwertuj na"
       },
       "message": {
         "uploadLabel": "lub upuść pliki tutaj",
@@ -23,7 +24,8 @@
         "editor": "Editor",
         "lastActivity": "Last Activity",
         "upload": "Upload files",
-        "okay": "Okay"
+        "okay": "Okay",
+        "convertTo": "Convert to"
       },
       "message": {
         "uploadLabel": "or drop files here",

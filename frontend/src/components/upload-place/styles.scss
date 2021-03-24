@@ -60,6 +60,7 @@
     top: 10px;
     color: #666666;
     cursor: pointer;
+    font-size: 20px;
   }
 }
 
@@ -75,18 +76,31 @@
       float: right;
     }
   }
+}
 
-  > .extensions {
+.upload--container-ready {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
+  > .single-extension {
+    width: 75px;
+    height: 75px;
+  }
 
-    > .single-extension {
-      width: 50px;
-      height: 50px;
-      margin: 0 10px;
-    }
+  > .convert-msg {
+    padding: 15px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  > .trash {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    color: #666666;
+    cursor: pointer;
   }
 }

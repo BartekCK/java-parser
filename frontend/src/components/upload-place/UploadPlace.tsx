@@ -2,6 +2,7 @@ import React from 'react';
 
 // components
 import UploadPlaceWithFile from './UploadPlaceWithFile';
+import Loader from '../loader';
 
 // custom hooks
 import useModalVisibleMange from '../../hooks/useModalVisibleManage';
@@ -10,14 +11,17 @@ import useModalVisibleMange from '../../hooks/useModalVisibleManage';
 import { useTranslation } from 'react-i18next';
 import { DropEvent, FileRejection, useDropzone } from 'react-dropzone';
 
+// types
+
 // styles
 import './styles.scss';
 
 // assets
 import UploadLogo from '../../assets/convert-extensions/global.png';
-import { AllowFileType } from './types/enums';
-import Modal from '../modal';
-import UploadPlaceInfo from './UploadPlaceInfo';
+import { AllowFileType } from '../../core/types/enums';
+
+// lazy components
+const UploadPlaceInfo = React.lazy(() => import('./UploadPlaceInfo'));
 
 const UploadPlace = React.forwardRef((props, divRef: React.RefObject<HTMLDivElement>) => {
     const [file, setFile] = React.useState<File | null>(null);
@@ -58,7 +62,7 @@ const UploadPlace = React.forwardRef((props, divRef: React.RefObject<HTMLDivElem
         <div ref={divRef} className="upload--container" {...getRootProps()} onClick={handleClick}>
             <i className="ask fa fa-question" aria-hidden="true" onClick={openInfoModal} />
             {file ? (
-                <UploadPlaceWithFile file={file} />
+                <UploadPlaceWithFile file={file} setFile={setFile} />
             ) : (
                 <React.Fragment>
                     <img className="upload-logo" src={UploadLogo} alt="upload-logo" />
@@ -70,7 +74,9 @@ const UploadPlace = React.forwardRef((props, divRef: React.RefObject<HTMLDivElem
                     <span>{t('message.uploadLabel')}</span>
                 </React.Fragment>
             )}
-            <UploadPlaceInfo closeInfoModal={closeInfoModal} isInfoModalOpen={isInfoModalOpen} />
+            <React.Suspense fallback={<Loader />}>
+                <UploadPlaceInfo closeInfoModal={closeInfoModal} isInfoModalOpen={isInfoModalOpen} />
+            </React.Suspense>
         </div>
     );
 });
