@@ -45,13 +45,6 @@ const UploadPlace = React.forwardRef((props, divRef: React.RefObject<HTMLDivElem
         setFile(singleFile);
     }, []);
 
-    React.useEffect(() => {
-        if (!file) {
-            return;
-        }
-        console.log(file);
-    }, [file]);
-
     const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
     const handleClick = (event): void => {

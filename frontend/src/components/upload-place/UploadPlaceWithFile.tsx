@@ -45,13 +45,17 @@ const UploadPlaceWithFile: React.FC<Props> = (props: Props) => {
         setFile(null);
     };
 
+    const handleConvertClick = async (type: AllowFileType): Promise<void> => {
+        console.log(type);
+    };
+
     return (
         <div className="upload--container-ready">
             <i className="trash fa fa-trash-o" aria-hidden="true" onClick={handleDeleteClick} />
             {currentFile}
             <span>{file.name}</span>
             <span className="convert-msg">{t('common.convertTo')}:</span>
-            <ExtensionListComponent />
+            <ExtensionListComponent handleClick={handleConvertClick} typesForExclude={[file.type]} />
         </div>
     );
 };
