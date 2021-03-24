@@ -28,7 +28,7 @@ const UploadPlaceWithFile: React.FC<Props> = (props: Props) => {
 
     const { t } = useTranslation();
 
-    const currentFile = React.useMemo(() => {
+    const currentFile = React.useMemo((): React.ReactElement => {
         switch (file.type) {
             case AllowFileType.xml:
                 return <img src={XmlDoc} className="single-extension" />;
@@ -36,12 +36,12 @@ const UploadPlaceWithFile: React.FC<Props> = (props: Props) => {
                 return <img src={JsonDoc} className="single-extension" />;
             case AllowFileType.csv:
                 return <img src={CsvDoc} className="single-extension" />;
-            case AllowFileType.yaml:
+            default:
                 return <img src={YamlDoc} className="single-extension" />;
         }
     }, [file]);
 
-    const handleDeleteClick = () => {
+    const handleDeleteClick = (): void => {
         setFile(null);
     };
 

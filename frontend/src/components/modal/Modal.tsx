@@ -16,13 +16,13 @@ const Modal: React.FC<Props> = (props: Props) => {
     const { children, isOpen, closeModal } = props;
 
     React.useEffect(() => {
-        if (isOpen) {
-            document.body.classList.add('hide--overflow');
+        if (!isOpen) {
+            return;
         }
+        document.body.classList.add('hide--overflow');
+
         return () => {
-            if (!isOpen) {
-                document.body.classList.remove('hide--overflow');
-            }
+            document.body.classList.remove('hide--overflow');
         };
     }, [isOpen]);
 

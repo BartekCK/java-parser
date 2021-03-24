@@ -1,7 +1,6 @@
 import React from 'react';
 
 // components
-import UploadPlaceWithFile from './UploadPlaceWithFile';
 import Loader from '../loader';
 
 // custom hooks
@@ -22,6 +21,7 @@ import { AllowFileType } from '../../core/types/enums';
 
 // lazy components
 const UploadPlaceInfo = React.lazy(() => import('./UploadPlaceInfo'));
+const UploadPlaceWithFile = React.lazy(() => import('./UploadPlaceWithFile'));
 
 const UploadPlace = React.forwardRef((props, divRef: React.RefObject<HTMLDivElement>) => {
     const [file, setFile] = React.useState<File | null>(null);
@@ -62,7 +62,9 @@ const UploadPlace = React.forwardRef((props, divRef: React.RefObject<HTMLDivElem
         <div ref={divRef} className="upload--container" {...getRootProps()} onClick={handleClick}>
             <i className="ask fa fa-question" aria-hidden="true" onClick={openInfoModal} />
             {file ? (
-                <UploadPlaceWithFile file={file} setFile={setFile} />
+                <React.Suspense fallback={<Loader />}>
+                    <UploadPlaceWithFile file={file} setFile={setFile} />
+                </React.Suspense>
             ) : (
                 <React.Fragment>
                     <img className="upload-logo" src={UploadLogo} alt="upload-logo" />
