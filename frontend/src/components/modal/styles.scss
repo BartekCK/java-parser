@@ -1,0 +1,40 @@
+.modal--wrapper {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.3);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+
+  &.-visible {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  > .container {
+    background: white;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 30px;
+    box-shadow: 0 3px 6px -4px rgb(0 0 0 / 12%), 0 6px 16px 0 rgb(0 0 0 / 8%), 0 9px 28px 8px rgb(0 0 0 / 5%);
+
+
+    > .close {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      font-size: 25px;
+      cursor: pointer;
+    }
+  }
+}
+
+.hide--overflow {
+  overflow: hidden;
+}
+
