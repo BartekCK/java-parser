@@ -9,5 +9,6 @@ import './core/translations/i18n';
 
 // global styles
 import './styles/styles.scss';
+import 'react-toastify/dist/ReactToastify.css';
 
 ReactDOM.render(<App />, document.getElementById('root'));

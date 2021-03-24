@@ -2,6 +2,7 @@ import React from 'react';
 
 // components
 import Loader from '../../components/loader';
+import { ToastContainer } from 'react-toastify';
 
 // custom hooks
 import useQuery from '../../hooks/useQuery';
@@ -26,6 +27,7 @@ const IndexPage = React.forwardRef((props, wrapperRef: React.RefObject<IRefWrapp
     return (
         <div className="index--page" ref={wrapperRef.current?.homeRef}>
             <React.Suspense fallback={<Loader />}>
+                <ToastContainer />
                 <Header />
                 <UploadContainer ref={wrapperRef.current?.uploadRef} />
                 <EditorContainer ref={wrapperRef.current?.editorRef} />

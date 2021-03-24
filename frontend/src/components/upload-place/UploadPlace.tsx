@@ -1,7 +1,11 @@
 import React from 'react';
 
+// core
+import { MAX_FILE_SIZE } from '../../core/constants';
+
 // components
 import Loader from '../loader';
+import { toast } from 'react-toastify';
 
 // custom hooks
 import useModalVisibleMange from '../../hooks/useModalVisibleManage';
@@ -39,8 +43,13 @@ const UploadPlace = React.forwardRef((props, divRef: React.RefObject<HTMLDivElem
             return;
         }
         const singleFile: File = acceptedFiles[0];
+        if (singleFile.size > MAX_FILE_SIZE) {
+            toast.error(t('message.errorSize'));
+            return;
+        }
         if (!allowTypes.includes(singleFile.type)) {
-            console.log('Extension not allowed');
+            toast.error(t('message.errorExtension'));
+            return;
         }
         setFile(singleFile);
     }, []);
