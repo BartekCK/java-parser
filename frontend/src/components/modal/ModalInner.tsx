@@ -7,15 +7,16 @@ type Props = {
     isOpen?: boolean;
     isVisible?: boolean;
     children: React.ReactNode;
+    closeModal: () => void;
 };
 
 const ModalInner: React.FC<Props> = (props: Props) => {
-    const { children, isVisible } = props;
-    console.log(isVisible);
+    const { children, isVisible, closeModal } = props;
+
     return (
-        <div className={`modal--wrapper ${isVisible ? '-visible' : ''}`}>
-            <div className="container">
-                <i className="close fa fa-times" aria-hidden="true"></i>
+        <div className={`modal--wrapper ${isVisible ? '-visible' : ''}`} onClick={closeModal}>
+            <div className="container" onClick={(event) => event.stopPropagation()}>
+                <i className="close fa fa-times" aria-hidden="true" onClick={closeModal} />
                 {children}
             </div>
         </div>

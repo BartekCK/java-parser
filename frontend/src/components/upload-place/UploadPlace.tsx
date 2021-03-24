@@ -1,5 +1,11 @@
 import React from 'react';
 
+// components
+import UploadPlaceWithFile from './UploadPlaceWithFile';
+
+// custom hooks
+import useModalVisibleMange from '../../hooks/useModalVisibleManage';
+
 // hooks
 import { useTranslation } from 'react-i18next';
 import { DropEvent, FileRejection, useDropzone } from 'react-dropzone';
@@ -10,10 +16,14 @@ import './styles.scss';
 // assets
 import UploadLogo from '../../assets/convert-extensions/global.png';
 import { AllowFileType } from './types/enums';
+import Modal from '../modal';
+import UploadPlaceInfo from './UploadPlaceInfo';
 
 const UploadPlace = React.forwardRef((props, divRef: React.RefObject<HTMLDivElement>) => {
     const [file, setFile] = React.useState<File | null>(null);
     const { t } = useTranslation();
+
+    const [isInfoModalOpen, openInfoModal, closeInfoModal] = useModalVisibleMange();
 
     const allowTypes: (string | AllowFileType)[] = React.useMemo(
         () => [AllowFileType.csv, AllowFileType.json, AllowFileType.xml, AllowFileType.yaml],
@@ -46,8 +56,9 @@ const UploadPlace = React.forwardRef((props, divRef: React.RefObject<HTMLDivElem
 
     return (
         <div ref={divRef} className="upload--container" {...getRootProps()} onClick={handleClick}>
+            <i className="ask fa fa-question" aria-hidden="true" onClick={openInfoModal} />
             {file ? (
-                <div>Work on</div>
+                <UploadPlaceWithFile file={file} />
             ) : (
                 <React.Fragment>
                     <img className="upload-logo" src={UploadLogo} alt="upload-logo" />
@@ -59,6 +70,7 @@ const UploadPlace = React.forwardRef((props, divRef: React.RefObject<HTMLDivElem
                     <span>{t('message.uploadLabel')}</span>
                 </React.Fragment>
             )}
+            <UploadPlaceInfo closeInfoModal={closeInfoModal} isInfoModalOpen={isInfoModalOpen} />
         </div>
     );
 });

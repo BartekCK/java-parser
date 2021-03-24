@@ -8,11 +8,12 @@ import './styles.scss';
 
 type Props = {
     children: React.ReactNode;
+    closeModal: () => void;
     isOpen?: boolean;
 };
 
 const Modal: React.FC<Props> = (props: Props) => {
-    const { children, isOpen } = props;
+    const { children, isOpen, closeModal } = props;
 
     React.useEffect(() => {
         if (isOpen) {
@@ -26,7 +27,7 @@ const Modal: React.FC<Props> = (props: Props) => {
     }, [isOpen]);
 
     return ReactDOM.createPortal(
-        <ModalInner isVisible={isOpen} isOpen={isOpen}>
+        <ModalInner isVisible={isOpen} isOpen={isOpen} closeModal={closeModal}>
             {children}
         </ModalInner>,
         document.body,
