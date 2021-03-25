@@ -4,10 +4,53 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
+
+  > .nav-btn {
+    display: none;
+    background: white;
+    border: 1px solid #797979;
+    border-radius: 3px;
+    width: 23px;
+    height: 20px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    @media (max-width: 600px) {
+      display: flex;
+    }
+  }
 
   > .navigation {
     margin: 0;
     display: flex;
     list-style: none;
+    transition: transform 330ms ease-in-out;
+
+    @media (max-width: 600px) {
+      position: absolute;
+      flex-direction: column;
+      background: #ffffff;
+      top: 0;
+      right: 100%;
+      padding: 0;
+      box-shadow: 0 3px 6px 4px rgb(0 0 0 / 12%), 0 6px 16px 0 rgb(0 0 0 / 8%), 0 9px 28px 8px rgb(0 0 0 / 5%);
+
+      > li {
+        padding: 10px;
+        margin: 0;
+        white-space: nowrap
+      }
+
+      &.-visible {
+        transform: translateX(100%);
+      }
+    }
+  }
+
+
+  @media (max-width: 600px) {
+    //background: red;
   }
 }
