@@ -1,0 +1,51 @@
+1. Co zostało zrobione?
+*Podstawowa konfiguracja, wystawienie aplikacji:
+http://ec2-3-135-197-175.us-east-2.compute.amazonaws.com/
+*Skonfigurowanie swaggera do dokumentacji
+*Stworzenie projektów
+
+Skompletowanie informacji o formacie JSON:
+JSON:
+
+Obiekt jest nieuporządkowanym zbiorem par nazwa/wartość. Opis obiektu rozpoczyna {lewa klamra a kończy }prawa klamra. Po każdej nazwie następuje :dwukropek oraz pary nazwa/wartość, oddzielone ,przecinkiem.
+
+Tabela jest uporządkowanym zbiorem wartości. Opis tabeli rozpoczyna znak [lewy nawias kwadratowy a kończy znak ]prawy nawias kwadratowy. Poszczegóne wartości rozdialane są znakiem ,przecinek.
+
+Wartość to łańcuch znakowy, którego początek i koniec oznacza podwójny cudzysłów, lub liczba, lub wartość true (prawda) lub false (fałsz) lub null, lub obiekt lub tabela. Struktury te można zagnieżdżać.
+
+Łancuch znakowy jest zbiorem zera lub większej ilości znaków Unicode, opakowanym w podwójne cudzysłowy, stosujących znak odwrotnego ukośnika jako początek sekwencji specjalnej (escape). Pojedynczy znak jest reprezentowany jako łańcuch jednoznakowy. Łańcuch znakowy JSON jest podobny do łańcucha znakowego C lub Java.
+
+Liczby zapisywane w formacie JSON są bardzo podobne do liczb w języku C lub Java, poza tym wyjątkiem, że nie używa się formatów ósemkowych i szesnastkowych.
+
+Wolne miejsce (spacje, znaki tabulatora, itp.) można wstawić między dowolną parę składowych. Poza kilkoma detalami dotyczącymi kodowania, na tym kończy się opis języka JSON.
+
+{
+  "glossary": {
+    "title": "example glossary",
+    "GlossDiv": {
+      "title": "S",
+      "GlossList": {
+        "GlossEntry": {
+          "ID": "SGML",
+          "SortAs": "SGML",
+          "GlossTerm": "Standard Generalized Markup Language",
+          "Acronym": "SGML",
+          "Abbrev": "ISO 8879:1986",
+          "GlossDef": {
+            "para": "A meta-markup language, used to create markup languages such as DocBook.",
+            "GlossSeeAlso": [
+              "GML",
+              "XML"
+            ]
+          },
+          "GlossSee": "markup"
+        }
+      }
+    }
+  }
+}
+
+2. Co będzie realizowane w kolejnym etapie?
+Przygotowanie środowiska uruchomieniowego. Tworzenie SPA -> nawigacja, karuzela, upload plików, obsługa błędów dla tych komponentów.
+Przygotowanie maszyny na AWS
+Skompletowanie informacji o reszcie formatów.
