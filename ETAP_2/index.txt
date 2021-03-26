@@ -1,8 +1,9 @@
 1. Co zostało zrobione?
-*Podstawowa konfiguracja, wystawienie aplikacji:
+*Podstawowa konfiguracja, wystawienie aplikacji na AWS:
 http://ec2-3-135-197-175.us-east-2.compute.amazonaws.com/
 *Skonfigurowanie swaggera do dokumentacji
 *Stworzenie projektów
+*Przygotowanie środowiska uruchomieniowego. Tworzenie SPA -> nawigacja, karuzela, upload plików, obsługa błędów dla tych komponentów.
 
 Skompletowanie informacji o formacie JSON:
 JSON:
@@ -46,6 +47,4 @@ Wolne miejsce (spacje, znaki tabulatora, itp.) można wstawić między dowolną 
 }
 
 2. Co będzie realizowane w kolejnym etapie?
-Przygotowanie środowiska uruchomieniowego. Tworzenie SPA -> nawigacja, karuzela, upload plików, obsługa błędów dla tych komponentów.
-Przygotowanie maszyny na AWS
 Skompletowanie informacji o reszcie formatów.
