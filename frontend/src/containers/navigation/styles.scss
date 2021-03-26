@@ -1,3 +1,5 @@
+@import "src/styles/constants/styles";
+
 .navigation--container {
   margin: 0;
   padding: 8px;
@@ -17,7 +19,7 @@
     align-items: center;
     justify-content: center;
     padding: 0;
-    @media (max-width: 600px) {
+    @media only screen and (max-width: $sm-size) {
       display: flex;
     }
   }
@@ -28,7 +30,7 @@
     list-style: none;
     transition: transform 330ms ease-in-out;
 
-    @media (max-width: 600px) {
+    @media (max-width: $sm-size) {
       position: absolute;
       flex-direction: column;
       background: #ffffff;
@@ -47,10 +49,5 @@
         transform: translateX(100%);
       }
     }
-  }
-
-
-  @media (max-width: 600px) {
-    //background: red;
   }
 }

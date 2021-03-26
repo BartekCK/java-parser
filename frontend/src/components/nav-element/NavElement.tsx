@@ -8,14 +8,18 @@ type Props = {
     routeName: string;
     name?: string;
     children?: React.ReactElement;
+    onClick?: () => void;
 };
 
 const NavElement = React.forwardRef((props: Props, divRef: React.RefObject<HTMLDivElement>) => {
-    const { name, routeName, children } = props;
+    const { name, routeName, children, onClick } = props;
 
     const handleClick = (): void => {
         if (!divRef.current) {
             return;
+        }
+        if (onClick) {
+            onClick();
         }
         window.scrollTo({
             top: divRef.current.offsetTop,

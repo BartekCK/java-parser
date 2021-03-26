@@ -1,5 +1,6 @@
-.carousel--wrapper {
+@import "src/styles/constants/styles";
 
+.carousel--wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,8 +17,12 @@
       position: static;
       visibility: visible;
     }
-
     transition: opacity 0.4s linear;
+
+    @media (max-width: $sm-size) {
+      width: 65px;
+      height: auto;
+    }
   }
 
   > .refresh {
