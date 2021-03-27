@@ -1,1 +1,3 @@
-
+redis-client:
+  redisService: localhost
+  redisPort: 6379
