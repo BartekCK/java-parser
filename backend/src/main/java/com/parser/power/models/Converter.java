@@ -3,11 +3,8 @@ package com.parser.power.models;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.redis.core.RedisHash;
-
 import java.io.Serializable;
 
-@RedisHash("Converter")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

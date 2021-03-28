@@ -2,8 +2,8 @@ package com.parser.power.repositories;
 
 import com.parser.power.models.Converter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
@@ -14,13 +14,11 @@ import java.util.concurrent.TimeUnit;
 public class ConverterRepositoryImpl implements ConverterRepository {
 
     private final RedisTemplate<String, Converter> redisTemplate;
-    private HashOperations<String, String, Object> hashOperations;
-    private static final String REDIS_ENTITY = "convert_data";
-
+    private ValueOperations<String, Converter> valueOperations;
 
     @PostConstruct
     private void init() {
-        hashOperations = redisTemplate.opsForHash();
+        valueOperations = redisTemplate.opsForValue();
     }
 
     @Override
@@ -28,13 +26,13 @@ public class ConverterRepositoryImpl implements ConverterRepository {
         if (redisTemplate.hasKey(key)) {
             System.out.println("Throw error in this place");
         }
-        hashOperations.put(key, REDIS_ENTITY, converter);
+        valueOperations.set(key, converter);
         redisTemplate.expire(key, secondsExpired, TimeUnit.SECONDS);
         return converter;
     }
 
     @Override
     public Converter getByKey(String key) {
-        return (Converter) hashOperations.get(key, REDIS_ENTITY);
+        return valueOperations.get(key);
     }
 }

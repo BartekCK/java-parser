@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Setter
 @Getter
 @Configuration
-@ConfigurationProperties(prefix = "redis-client")
+@ConfigurationProperties("redis")
 public class ClientRedisConfigProperties {
     private String redisServer;
     private int redisPort;

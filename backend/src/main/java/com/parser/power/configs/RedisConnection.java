@@ -12,14 +12,18 @@ import org.springframework.data.redis.core.RedisTemplate;
 @RequiredArgsConstructor
 public class RedisConnection {
 
-    // TODO: Add credentials from app.yaml
+    private final ClientRedisConfigProperties clientConfigProperties;
+
     @Bean
-    public JedisConnectionFactory jedisConnectionFactory(){
-        return new JedisConnectionFactory(new RedisStandaloneConfiguration("localhost", 6379));
+    public JedisConnectionFactory jedisConnectionFactory() {
+        return new JedisConnectionFactory(
+                new RedisStandaloneConfiguration(
+                        clientConfigProperties.getRedisServer(),
+                        clientConfigProperties.getRedisPort()));
     }
 
     @Bean
-    public RedisTemplate<String, Converter> redisTemplate(){
+    public RedisTemplate<String, Converter> redisTemplate() {
         RedisTemplate<String, Converter> template = new RedisTemplate<>();
         template.setConnectionFactory(jedisConnectionFactory());
         return template;
