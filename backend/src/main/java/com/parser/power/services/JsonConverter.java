@@ -13,6 +13,10 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -59,31 +63,37 @@ public class JsonConverter {
         return "" ;
     }
 
-    //This function is called recursively
     private static void visitChildNodes(NodeList nList) {
         for (int temp = 0; temp < nList.getLength(); temp++) {
             Node node = nList.item(temp);
             if (node.getNodeType() == Node.ELEMENT_NODE) {
-
-                //Check all attributes
+                XPathExpression path = null;
+                try {
+                    path = XPathFactory.newInstance().newXPath().compile("/"+node.getNodeName()+"/*");
+                } catch (XPathExpressionException e) {
+                    e.printStackTrace();
+                }
+                NodeList nodeList = null;
+                try {
+                    nodeList = (NodeList) path.evaluate(node, XPathConstants.NODESET);
+                } catch (XPathExpressionException e) {
+                    e.printStackTrace();
+                }
                 if (node.hasAttributes()) {
-                    // get attributes names and values
                     NamedNodeMap nodeMap = node.getAttributes();
                     for (int i = 0; i < nodeMap.getLength(); i++) {
                         Node tempNode = nodeMap.item(i);
                         System.out.println("Attr name : " + tempNode.getNodeName() + "; Value = " + tempNode.getNodeValue());
                     }
                     if (node.hasChildNodes()) {
-                        //We got more childs; Let's visit them as well
                         visitChildNodes(node.getChildNodes());
                     }
                 }
-                if (node.getNextSibling()==null) {
-                    //We got more childs; Let's visit them as well
+                if (nodeList.getLength()>0) {
                     System.out.println(node.getNodeName() + ": {");
                     visitChildNodes(node.getChildNodes());
                     System.out.println("}");
-                } else
+                }else
                     System.out.println("\"" +node.getNodeName() + "\" : \"" + node.getTextContent()+"\"");
             }
         }
