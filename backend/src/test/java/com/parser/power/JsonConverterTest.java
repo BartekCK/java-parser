@@ -22,7 +22,7 @@ public class JsonConverterTest {
     @Test
     void test() throws IOException, SAXException, ParserConfigurationException {
         String xml = "<book>\n" +
-                "    <title>Some title</title>\n" +
+                "    <title edited=\"whenever\">Some title</title>\n" +
                 "    <description>some description </description>\n" +
                 "    <author>\n" +
                 "        <id>1</id>\n" +

@@ -33,6 +33,8 @@ public class JsonConverter {
     }
 
     public List<Node> alreadyVisited = new ArrayList<>();
+    public List<Node> nodes = new ArrayList<>();
+
 
     public String convertFromXmlToJson(String xml) throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -64,16 +66,17 @@ public class JsonConverter {
     private void visitChildNodes(NodeList nList) {
         for (int temp = 0; temp < nList.getLength(); temp++) {
             Node node = nList.item(temp);
+
             if (node.getNodeType() == Node.ELEMENT_NODE) {
                 //Check all attributes
-/*                if (node.hasAttributes()) {
+                if (node.hasAttributes()) {
                     // get attributes names and values
                     NamedNodeMap nodeMap = node.getAttributes();
                     for (int i = 0; i < nodeMap.getLength(); i++) {
                         Node tempNode = nodeMap.item(i);
                         System.out.println("\"" + tempNode.getNodeName() + "\" : \"" + tempNode.getNodeValue() + "\"");
                     }
-                }*/
+                }
                 NodeList nl = ((Element) node).getElementsByTagName("*");
                 if (nl.getLength() > 0) {
                     System.out.println("\"" + node.getNodeName() + "\" : {");
