@@ -28,6 +28,10 @@ public class JsonConverterTest {
                 "        <id>1</id>\n" +
                 "        <name>some author name</name>\n" +
                 "    </author>\n" +
+                "    <buyer>\n" +
+                "        <id>2</id>\n" +
+                "        <name>some buyer name</name>\n" +
+                "    </buyer>\n" +
                 "    <review>nice book</review>\n" +
                 "    <review>this book sucks</review>\n" +
                 "    <review>amazing work</review>\n" +

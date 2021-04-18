@@ -31,70 +31,53 @@ public class JsonConverter {
     }
 
     public String convertFromXmlToJson(String xml) throws ParserConfigurationException, IOException, SAXException {
-        //Get Document Builder
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
 
-        //Build Document
         File temp = File.createTempFile("name", ".xml");
 
-        // Delete temp file when program exits.
         temp.deleteOnExit();
 
-        // Write to temp file
         BufferedWriter out = new BufferedWriter(new FileWriter(temp));
         out.write(xml);
         out.close();
         Document document = builder.parse(temp);
 
-        //Normalize the XML Structure; It's just too important !!
         document.getDocumentElement().normalize();
 
-        //Here comes the root node
         Element root = document.getDocumentElement();
         System.out.println(root.getNodeName());
 
-        //Get all employees
         NodeList nList = document.getElementsByTagName(root.getNodeName());
 
         System.out.println("============================");
 
         visitChildNodes(nList);
-        return "" ;
+        return "";
     }
 
+    //This function is called recursively
     private static void visitChildNodes(NodeList nList) {
         for (int temp = 0; temp < nList.getLength(); temp++) {
             Node node = nList.item(temp);
             if (node.getNodeType() == Node.ELEMENT_NODE) {
-                XPathExpression path = null;
-                try {
-                    path = XPathFactory.newInstance().newXPath().compile("/"+node.getNodeName()+"/*");
-                } catch (XPathExpressionException e) {
-                    e.printStackTrace();
-                }
-                NodeList nodeList = null;
-                try {
-                    nodeList = (NodeList) path.evaluate(node, XPathConstants.NODESET);
-                } catch (XPathExpressionException e) {
-                    e.printStackTrace();
-                }
-                if (node.hasAttributes()) {
+                //Check all attributes
+/*                if (node.hasAttributes()) {
+                    // get attributes names and values
                     NamedNodeMap nodeMap = node.getAttributes();
                     for (int i = 0; i < nodeMap.getLength(); i++) {
                         Node tempNode = nodeMap.item(i);
-                        System.out.println("Attr name : " + tempNode.getNodeName() + "; Value = " + tempNode.getNodeValue());
+                        System.out.println("\"" + tempNode.getNodeName() + "\" : \"" + tempNode.getNodeValue() + "\"");
                     }
-                    if (node.hasChildNodes()) {
-                        visitChildNodes(node.getChildNodes());
-                    }
-                }
-                if (nodeList.getLength()>0) {
-                    System.out.println(node.getNodeName() + ": {");
-                    visitChildNodes(node.getChildNodes());
+                }*/
+                NodeList nl = ((Element)node).getElementsByTagName("*");
+                if (nl.getLength()>0) {
+                    System.out.println("\"" + node.getNodeName() + "\" : {");
+                    visitChildNodes(nl);
                     System.out.println("}");
-                }else
-                    System.out.println("\"" +node.getNodeName() + "\" : \"" + node.getTextContent()+"\"");
+                } else {
+                    System.out.println("\"" + node.getNodeName() + "\" : \"" + node.getTextContent() + "\"");
+                }
             }
         }
     }
