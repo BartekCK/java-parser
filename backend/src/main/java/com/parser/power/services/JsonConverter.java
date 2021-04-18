@@ -21,6 +21,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +31,8 @@ public class JsonConverter {
     public String convertFromCsvToJson(String csv) {
         return null;
     }
+
+    public List<Node> alreadyVisited = new ArrayList<>();
 
     public String convertFromXmlToJson(String xml) throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -57,7 +61,7 @@ public class JsonConverter {
     }
 
     //This function is called recursively
-    private static void visitChildNodes(NodeList nList) {
+    private void visitChildNodes(NodeList nList) {
         for (int temp = 0; temp < nList.getLength(); temp++) {
             Node node = nList.item(temp);
             if (node.getNodeType() == Node.ELEMENT_NODE) {
@@ -70,13 +74,16 @@ public class JsonConverter {
                         System.out.println("\"" + tempNode.getNodeName() + "\" : \"" + tempNode.getNodeValue() + "\"");
                     }
                 }*/
-                NodeList nl = ((Element)node).getElementsByTagName("*");
-                if (nl.getLength()>0) {
+                NodeList nl = ((Element) node).getElementsByTagName("*");
+                if (nl.getLength() > 0) {
                     System.out.println("\"" + node.getNodeName() + "\" : {");
                     visitChildNodes(nl);
                     System.out.println("}");
                 } else {
-                    System.out.println("\"" + node.getNodeName() + "\" : \"" + node.getTextContent() + "\"");
+                    if (!alreadyVisited.contains(node)) {
+                        System.out.println("\"" + node.getNodeName() + "\" : \"" + node.getTextContent() + "\"");
+                        this.alreadyVisited.add(node);
+                    }
                 }
             }
         }
