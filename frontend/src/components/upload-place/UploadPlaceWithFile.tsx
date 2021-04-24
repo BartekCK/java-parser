@@ -18,6 +18,7 @@ import CsvDoc from '../../assets/convert-extensions/csv-doc.png';
 import YamlDoc from '../../assets/convert-extensions/yaml-doc.png';
 import XmlDoc from '../../assets/convert-extensions/xml-doc.png';
 import { ApiInstance } from '../../api/config';
+import {uploadFile} from "../../api/commands";
 
 type Props = {
     file: File;
@@ -47,15 +48,7 @@ const UploadPlaceWithFile: React.FC<Props> = (props: Props) => {
     };
 
     const handleConvertClick = async (target: AllowFileType): Promise<void> => {
-        console.log(target);
-        const formData = new FormData();
-        formData.append('file', file);
-        const result = await ApiInstance.post('/upload', formData, {
-            params: {
-                current: file.type,
-                target,
-            },
-        });
+        const result = await uploadFile(file, target);
         console.log(result);
     };
 
