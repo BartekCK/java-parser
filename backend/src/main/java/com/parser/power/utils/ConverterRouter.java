@@ -12,7 +12,7 @@ public class ConverterRouter {
         switch (current) {
             case YAML:
                 yamlConverter = new YamlConverter(text);
-                json = yamlConverter.convertYamlToJson();
+                this.json = yamlConverter.convertYamlToJson();
                 break;
 
             case XML:
@@ -22,7 +22,6 @@ public class ConverterRouter {
             default:
                 this.json = text;
         }
-        this.json = text;
     }
 
     public String convertTo(ConvertType target) throws Exception {
@@ -37,5 +36,9 @@ public class ConverterRouter {
             default:
                 return this.json;
         }
+    }
+
+    public String getJson() {
+        return json;
     }
 }
