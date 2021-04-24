@@ -16,15 +16,19 @@ class YamlConverterTest {
 
     @Test
     void shouldConvertYamlToJSON() throws JsonProcessingException {
-        String yaml =
-                "receipt: Oz-Ware Purchase Invoice\n" +
-                        "date: 2007-08-06\n" +
-                        "customer:\n" +
-                        "    given:   Dorothy\n" +
-                        "    family:  Gale";
+        String yaml = "receipt: \"Oz-Ware Purchase Invoice\"\n" +
+                "number: 2007\n" +
+                "customer:\n" +
+                "  given: 1\n" +
+                "  family: \"Gale\"";
+
         YamlConverter yamlConverter = new YamlConverter(yaml);
         String json = yamlConverter.convertYamlToJson();
-        System.out.println(json);
+
+        JsonConverter jsonConverter = new JsonConverter();
+        String convertedYaml = jsonConverter.convertFromJsonToYaml(json);
+
+       assertTrue(yaml.trim().equals(convertedYaml.trim()));
     }
 
 }

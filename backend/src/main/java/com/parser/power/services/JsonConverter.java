@@ -1,8 +1,10 @@
 package com.parser.power.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.*;
@@ -95,8 +97,10 @@ public class JsonConverter {
         return null;
     }
 
-    public String convertFromJsonToYaml(String json) {
-        return " Ala ma kota";
+    public String convertFromJsonToYaml(String json) throws JsonProcessingException {
+        JsonNode jsonNode = new ObjectMapper().readTree(json);
+        String badYaml = new YAMLMapper().writeValueAsString(jsonNode);
+        return badYaml.substring(4);
     }
 
 }

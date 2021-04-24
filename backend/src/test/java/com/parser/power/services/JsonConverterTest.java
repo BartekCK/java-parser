@@ -1,4 +1,4 @@
-package com.parser.power;
+package com.parser.power.services;
 
 import com.parser.power.services.JsonConverter;
 import org.junit.jupiter.api.Test;
