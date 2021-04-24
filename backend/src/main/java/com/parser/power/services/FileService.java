@@ -15,7 +15,6 @@ public class FileService {
         String forConvertString = new String(file.getBytes());
         ConverterRouter converterRouter = new ConverterRouter(forConvertString, current);
         String readyString = converterRouter.convertTo(target);
-        System.out.println(readyString);
         return readyString.getBytes();
     }
 }

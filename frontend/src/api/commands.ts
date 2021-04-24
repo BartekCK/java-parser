@@ -14,5 +14,6 @@ export const uploadFile = async (file: File, target: AllowFileType): Promise<Axi
             current: file.type,
             target,
         },
+        responseType: 'blob',
     });
 };
