@@ -6,16 +6,15 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
 public class YamlConverter {
 
-    private String yamlInString;
+    private String yaml;
     private ObjectMapper yamlReader = new ObjectMapper(new YAMLFactory());
 
-
-    public YamlConverter(String yamlInString) {
-        this.yamlInString = yamlInString;
+    public YamlConverter(String yaml) {
+        this.yaml = yaml;
     }
 
     public String convertYamlToJson() throws JsonProcessingException {
-        Object obj = yamlReader.readValue(this.yamlInString, Object.class);
+        Object obj = yamlReader.readValue(this.yaml, Object.class);
         return new ObjectMapper().writeValueAsString(obj);
     }
 

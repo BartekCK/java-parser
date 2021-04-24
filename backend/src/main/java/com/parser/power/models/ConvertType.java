@@ -1,6 +1,6 @@
 package com.parser.power.models;
 
-public enum FileExtension {
+public enum ConvertType {
     YAML("application/x-yaml"),
     XML("text/xml"),
     CSV("text/csv"),
@@ -8,12 +8,12 @@ public enum FileExtension {
 
     private final String type;
 
-    private FileExtension(String type) {
+    private ConvertType(String type) {
         this.type = type;
     }
 
-    public static FileExtension fromString(String text) {
-        for (FileExtension b : FileExtension.values()) {
+    public static ConvertType fromString(String text) {
+        for (ConvertType b : ConvertType.values()) {
             if (b.type.equalsIgnoreCase(text)) {
                 return b;
             }

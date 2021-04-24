@@ -1,13 +1,13 @@
 package com.parser.power.utils;
 
-import com.parser.power.models.FileExtension;
+import com.parser.power.models.ConvertType;
 import org.springframework.core.convert.converter.Converter;
 
-public class StringParamToEnumConverter implements Converter<String, FileExtension> {
+public class StringParamToEnumConverter implements Converter<String, ConvertType> {
     @Override
-    public FileExtension convert(String source) {
+    public ConvertType convert(String source) {
         try{
-            return FileExtension.fromString(source);
+            return ConvertType.fromString(source);
         }catch (Exception e){
             return null;
         }
