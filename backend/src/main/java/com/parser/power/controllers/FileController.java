@@ -10,10 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-
 @Controller
 @RequestMapping("/api/v1")
 @CrossOrigin
@@ -26,8 +22,7 @@ public class FileController {
     @PostMapping("/upload")
     public ResponseEntity<byte[]> handleFileUpload(@RequestParam("file") MultipartFile file,
                                                    @RequestParam("current") ConvertType current,
-                                                   @RequestParam("target") ConvertType target,
-                                                   HttpServletResponse response) {
+                                                   @RequestParam("target") ConvertType target) {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentDisposition(ContentDisposition.builder("inline")
