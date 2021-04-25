@@ -17,6 +17,7 @@ import JsonDoc from '../../assets/convert-extensions/json-doc.png';
 import CsvDoc from '../../assets/convert-extensions/csv-doc.png';
 import YamlDoc from '../../assets/convert-extensions/yaml-doc.png';
 import XmlDoc from '../../assets/convert-extensions/xml-doc.png';
+import { uploadFile } from '../../api/commands';
 
 type Props = {
     file: File;
@@ -45,8 +46,28 @@ const UploadPlaceWithFile: React.FC<Props> = (props: Props) => {
         setFile(null);
     };
 
-    const handleConvertClick = async (type: AllowFileType): Promise<void> => {
-        console.log(type);
+    const setFileExtension = React.useCallback((target: AllowFileType): string => {
+        switch (target) {
+            case AllowFileType.xml:
+                return 'xml';
+            case AllowFileType.json:
+                return 'json';
+            case AllowFileType.csv:
+                return 'csv';
+            default:
+                return 'yml';
+        }
+    }, []);
+
+    const handleConvertClick = async (target: AllowFileType): Promise<void> => {
+        const result = await uploadFile(file, target);
+
+        const url = window.URL.createObjectURL(new Blob([result.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `${file.name.split('.')[0]}.${setFileExtension(target)}`); //or any other extension
+        document.body.appendChild(link);
+        link.click();
     };
 
     return (

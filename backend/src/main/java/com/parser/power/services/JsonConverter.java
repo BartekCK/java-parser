@@ -1,5 +1,10 @@
 package com.parser.power.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.*;
@@ -9,14 +14,6 @@ import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-import javax.xml.validation.Validator;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpression;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -91,10 +88,6 @@ public class JsonConverter {
         }
     }
 
-    public String convertFromYamlToJson(String yaml) {
-        return null;
-    }
-
     public String convertFromJsonToCsv(String json) {
         return null;
     }
@@ -103,8 +96,10 @@ public class JsonConverter {
         return null;
     }
 
-    public String convertFromJsonToYaml(String json) {
-        return null;
+    public String convertFromJsonToYaml(String json) throws JsonProcessingException {
+        JsonNode jsonNode = new ObjectMapper().readTree(json);
+        String badYaml = new YAMLMapper().writeValueAsString(jsonNode);
+        return badYaml.substring(4);
     }
 
 }
