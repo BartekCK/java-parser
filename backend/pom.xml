@@ -89,6 +89,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>backend-converter</finalName>
     </build>
 
 </project>

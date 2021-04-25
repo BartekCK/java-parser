@@ -12,3 +12,9 @@ services:
     ports:
       - published: 6379
         target: 6379
+
+  backend-parser:
+    build: ./backend
+    ports:
+      - "8080:8080"
+
