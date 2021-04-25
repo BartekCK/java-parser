@@ -1,15 +1,22 @@
 package com.parser.power.controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.parser.power.services.JsonConverter;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 
 @RestController
-@RequestMapping("/test")
+@RequestMapping("/xml/converter")
+@RequiredArgsConstructor
 public class TestController {
 
-    @GetMapping
-    public String test() {
-        return "Hello world!";
+    private final JsonConverter jsonConverter;
+
+    @PostMapping("/json")
+    public String convertXmlToJson(@RequestBody String xml) throws IOException, SAXException, ParserConfigurationException {
+        return jsonConverter.convertFromXmlToJson(xml);
     }
 }
