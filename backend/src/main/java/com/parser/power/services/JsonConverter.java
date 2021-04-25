@@ -19,7 +19,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +31,7 @@ public class JsonConverter {
         return null;
     }
 
+    public Map<Node, List<Node>> alreadyVisitedAttr = new HashMap<>();
     public List<Node> alreadyVisited = new ArrayList<>();
     public List<Node> nodes = new ArrayList<>();
     private String json = "";
@@ -51,8 +54,10 @@ public class JsonConverter {
 
         Element root = document.getDocumentElement();
         NodeList nList = document.getElementsByTagName(root.getNodeName());
-
+        json = new StringBuilder(json).append("{\n").toString();
         visitChildNodes(nList);
+        json = new StringBuilder(json).append("}\n").toString();
+        json = json.replace(",\n}", "\n}");
         return json;
     }
 
@@ -64,7 +69,13 @@ public class JsonConverter {
                     NamedNodeMap nodeMap = node.getAttributes();
                     for (int i = 0; i < nodeMap.getLength(); i++) {
                         Node tempNode = nodeMap.item(i);
-                        json = new StringBuilder(json).append("\"" + tempNode.getNodeName() + "\" : \"" + tempNode.getNodeValue() + "\",\n").toString();
+                        if (!alreadyVisitedAttr.containsKey(node) || !alreadyVisitedAttr.get(node).contains(tempNode)) {
+                            json = new StringBuilder(json).append("\"" + tempNode.getNodeName() + "\" : \"" + tempNode.getNodeValue() + "\",\n").toString();
+                            if(!alreadyVisitedAttr.containsKey(node)) {
+                                alreadyVisitedAttr.put(node, new ArrayList<>());
+                            }
+                            alreadyVisitedAttr.get(node).add(tempNode);
+                        }
                     }
                 }
                 NodeList nl = ((Element) node).getElementsByTagName("*");
