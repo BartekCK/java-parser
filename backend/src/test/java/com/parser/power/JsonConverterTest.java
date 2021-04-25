@@ -10,6 +10,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
 import java.io.IOException;
 
 @ActiveProfiles("test")
@@ -21,6 +22,7 @@ public class JsonConverterTest {
 
     @Test
     void test() throws IOException, SAXException, ParserConfigurationException {
+        String file = new String(getClass().getClassLoader().getResourceAsStream("xml/example.xml").readAllBytes());
         String xml = "<book>\n" +
                 "    <title edited=\"whenever\">Some title</title>\n" +
                 "    <description>some description </description>\n" +
@@ -37,7 +39,7 @@ public class JsonConverterTest {
                 "    <review>amazing work</review>\n" +
                 "</book>"
 ;
-               String result = jsonConverter.convertFromXmlToJson(xml);
+               String result = jsonConverter.convertFromXmlToJson(file);
         System.out.println(result);
     }
 }

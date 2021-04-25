@@ -34,6 +34,7 @@ public class JsonConverter {
 
     public List<Node> alreadyVisited = new ArrayList<>();
     public List<Node> nodes = new ArrayList<>();
+    private String json = "";
 
 
     public String convertFromXmlToJson(String xml) throws ParserConfigurationException, IOException, SAXException {
@@ -52,39 +53,37 @@ public class JsonConverter {
         document.getDocumentElement().normalize();
 
         Element root = document.getDocumentElement();
-        System.out.println(root.getNodeName());
-
         NodeList nList = document.getElementsByTagName(root.getNodeName());
 
-        System.out.println("============================");
-
         visitChildNodes(nList);
-        return "";
+        return json;
     }
 
-    //This function is called recursively
     private void visitChildNodes(NodeList nList) {
         for (int temp = 0; temp < nList.getLength(); temp++) {
             Node node = nList.item(temp);
-
             if (node.getNodeType() == Node.ELEMENT_NODE) {
-                //Check all attributes
                 if (node.hasAttributes()) {
-                    // get attributes names and values
                     NamedNodeMap nodeMap = node.getAttributes();
                     for (int i = 0; i < nodeMap.getLength(); i++) {
                         Node tempNode = nodeMap.item(i);
-                        System.out.println("\"" + tempNode.getNodeName() + "\" : \"" + tempNode.getNodeValue() + "\"");
+                        json = new StringBuilder(json).append("\"" + tempNode.getNodeName() + "\" : \"" + tempNode.getNodeValue() + "\",\n").toString();
                     }
                 }
                 NodeList nl = ((Element) node).getElementsByTagName("*");
+                NodeList siblings = ((Element) node).getElementsByTagName(node.getNodeName());
                 if (nl.getLength() > 0) {
-                    System.out.println("\"" + node.getNodeName() + "\" : {");
+                    json = new StringBuilder(json).append("\"" + node.getNodeName() + "\" : {\n").toString();
                     visitChildNodes(nl);
-                    System.out.println("}");
+                    json = new StringBuilder(json).append("},\n").toString();
                 } else {
                     if (!alreadyVisited.contains(node)) {
-                        System.out.println("\"" + node.getNodeName() + "\" : \"" + node.getTextContent() + "\"");
+                        if (siblings.getLength() > 1) {
+                            for (int temp2 = 0; temp2 < siblings.getLength(); temp2++) {
+                                //System.out.println(siblings);
+                            }
+                        }
+                        json = new StringBuilder(json).append("\"" + node.getNodeName() + "\" : \"" + node.getTextContent() + "\",\n").toString();
                         this.alreadyVisited.add(node);
                     }
                 }
