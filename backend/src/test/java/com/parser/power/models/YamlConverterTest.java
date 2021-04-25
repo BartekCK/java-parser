@@ -1,6 +1,8 @@
-package com.parser.power.services;
+package com.parser.power.models;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.parser.power.models.JsonConverter;
+import com.parser.power.models.YamlConverter;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;

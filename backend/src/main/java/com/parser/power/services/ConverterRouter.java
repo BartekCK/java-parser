@@ -1,8 +1,9 @@
-package com.parser.power.utils;
+package com.parser.power.services;
 
 import com.parser.power.models.ConvertType;
-import com.parser.power.services.JsonConverter;
-import com.parser.power.services.YamlConverter;
+import com.parser.power.models.JsonConverter;
+import com.parser.power.models.XmlConverter;
+import com.parser.power.models.YamlConverter;
 
 public class ConverterRouter {
     private String json;
@@ -16,6 +17,10 @@ public class ConverterRouter {
                 break;
 
             case XML:
+                XmlConverter xmlConverter = new XmlConverter(text);
+                this.json = xmlConverter.convertFromXmlToJson();
+                break;
+
             case CSV:
                 throw new Exception("Not implemented yet");
 

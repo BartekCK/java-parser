@@ -1,24 +1,19 @@
-package com.parser.power.services;
+package com.parser.power.models;
 
-import com.parser.power.services.JsonConverter;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
 import java.io.IOException;
 
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class JsonConverterTest {
-    @Autowired
-    private JsonConverter jsonConverter;
+public class XmlConverterTest {
 
     @Test
     void test() throws IOException, SAXException, ParserConfigurationException {
@@ -37,9 +32,10 @@ public class JsonConverterTest {
                 "    <review>nice book</review>\n" +
                 "    <review>this book sucks</review>\n" +
                 "    <review>amazing work</review>\n" +
-                "</book>"
-;
-               String result = jsonConverter.convertFromXmlToJson(file);
+                "</book>";
+
+                XmlConverter xmlConverter = new XmlConverter(xml);
+               String result = xmlConverter.convertFromXmlToJson();
         System.out.println(result);
     }
 }

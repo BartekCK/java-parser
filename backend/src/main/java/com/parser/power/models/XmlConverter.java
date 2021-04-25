@@ -1,16 +1,10 @@
-package com.parser.power.services;
+package com.parser.power.models;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
-import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -21,20 +15,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
-@RequiredArgsConstructor
-public class JsonConverter {
+public class XmlConverter {
 
-    public String convertFromCsvToJson(String csv) {
-        return null;
-    }
-
+    private String xml;
     public List<Node> alreadyVisited = new ArrayList<>();
-    public List<Node> nodes = new ArrayList<>();
     private String json = "";
 
+    public XmlConverter(String xml) {
+        this.xml = xml;
+    }
 
-    public String convertFromXmlToJson(String xml) throws ParserConfigurationException, IOException, SAXException {
+    public String convertFromXmlToJson() throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
 
@@ -87,19 +78,4 @@ public class JsonConverter {
             }
         }
     }
-
-    public String convertFromJsonToCsv(String json) {
-        return null;
-    }
-
-    public String convertFromJsonToXml(String json) {
-        return null;
-    }
-
-    public String convertFromJsonToYaml(String json) throws JsonProcessingException {
-        JsonNode jsonNode = new ObjectMapper().readTree(json);
-        String badYaml = new YAMLMapper().writeValueAsString(jsonNode);
-        return badYaml.substring(4);
-    }
-
 }
