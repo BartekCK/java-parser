@@ -6,8 +6,8 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
 public class YamlConverter {
 
-    private String yaml;
-    private ObjectMapper yamlReader = new ObjectMapper(new YAMLFactory());
+    private final String yaml;
+    private final ObjectMapper yamlReader = new ObjectMapper(new YAMLFactory());
 
     public YamlConverter(String yaml) {
         this.yaml = yaml;

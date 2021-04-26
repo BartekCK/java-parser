@@ -2,7 +2,10 @@ package com.parser.power.controllers;
 
 import com.parser.power.services.JsonConverter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;

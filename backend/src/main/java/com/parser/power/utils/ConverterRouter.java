@@ -5,7 +5,7 @@ import com.parser.power.services.JsonConverter;
 import com.parser.power.services.YamlConverter;
 
 public class ConverterRouter {
-    private String json;
+    private final String json;
     private YamlConverter yamlConverter;
 
     public ConverterRouter(String text, ConvertType current) throws Exception {

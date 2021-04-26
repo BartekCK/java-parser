@@ -8,7 +8,7 @@ public enum ConvertType {
 
     private final String type;
 
-    private ConvertType(String type) {
+    ConvertType(String type) {
         this.type = type;
     }
 

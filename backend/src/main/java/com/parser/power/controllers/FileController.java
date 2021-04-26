@@ -4,15 +4,15 @@ import com.parser.power.models.ConvertType;
 import com.parser.power.services.FileService;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
-
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 
 @Controller
 @RequestMapping("/api/v1")
@@ -20,7 +20,7 @@ import java.io.InputStream;
 @AllArgsConstructor
 public class FileController {
 
-    private FileService fileService;
+    private final FileService fileService;
 
     @SneakyThrows
     @PostMapping("/upload")
