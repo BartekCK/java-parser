@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class YamlConverterTest {
 
     @Test
-    void shouldConvertYamlToJSON() throws JsonProcessingException {
+    void shouldConvertYamlToJson() throws JsonProcessingException {
         String yaml = "receipt: \"Oz-Ware Purchase Invoice\"\n" +
                 "number: 2007\n" +
                 "customer:\n" +

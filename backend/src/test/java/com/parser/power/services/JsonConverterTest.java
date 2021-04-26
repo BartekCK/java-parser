@@ -1,7 +1,10 @@
 package com.parser.power.services;
 
+import org.json.JSONException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -19,9 +22,13 @@ public class JsonConverterTest {
     private JsonConverter jsonConverter;
 
     @Test
-    void test() throws IOException, SAXException, ParserConfigurationException {
-        String file = new String(getClass().getClassLoader().getResourceAsStream("xml/example2.xml").readAllBytes());
-        String result = jsonConverter.convertFromXmlToJson(file);
-        System.out.println(result);
+    void shouldConvertFromXmlToJson() throws IOException, SAXException, ParserConfigurationException, JSONException {
+        //given
+        String request = new String(getClass().getClassLoader().getResourceAsStream("xml/example2.xml").readAllBytes());
+        String expectedResponse = new String(getClass().getClassLoader().getResourceAsStream("json/example2.json").readAllBytes());
+        //when
+        String result = jsonConverter.convertFromXmlToJson(request);
+        //then
+        JSONAssert.assertEquals(expectedResponse, result, false);
     }
 }

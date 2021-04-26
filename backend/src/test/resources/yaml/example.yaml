@@ -1,0 +1,5 @@
+receipt: "Oz-Ware Purchase Invoice"
+  number: 2007
+  customer:
+    given: 1
+  family: "Gale"

@@ -1,0 +1,19 @@
+{
+  "book" : {
+    "edited" : "whenever",
+    "title" : "Some title",
+    "description" : "some description",
+    "author" : {
+      "id" : "1",
+      "name" : "some author name"
+    },
+    "buyer" : {
+      "id" : "2",
+      "name" : "some buyer name"
+    },
+    "review" : "nice book",
+    "review" : "this book sucks",
+    "review" : "amazing work"
+  }
+}
+
