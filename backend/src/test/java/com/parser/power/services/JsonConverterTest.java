@@ -13,10 +13,11 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 
+@SpringBootTest
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
-@SpringBootTest
 public class JsonConverterTest {
+
     @Autowired
     private JsonConverter jsonConverter;
 

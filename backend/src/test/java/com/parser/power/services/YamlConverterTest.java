@@ -7,11 +7,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@SpringBootTest
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
-@SpringBootTest
 class YamlConverterTest {
 
     @Test
@@ -28,7 +29,7 @@ class YamlConverterTest {
         JsonConverter jsonConverter = new JsonConverter();
         String convertedYaml = jsonConverter.convertFromJsonToYaml(json);
 
-        assertTrue(yaml.trim().equals(convertedYaml.trim()));
+        assertEquals(convertedYaml.trim(), yaml.trim());
     }
 
 }
