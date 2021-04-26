@@ -84,11 +84,6 @@ public class JsonConverter {
                     json = new StringBuilder(json).append("},\n").toString();
                 } else {
                     if (!alreadyVisited.contains(node)) {
-                        if (siblings.getLength() > 1) {
-                            for (int temp2 = 0; temp2 < siblings.getLength(); temp2++) {
-                                //System.out.println(siblings);
-                            }
-                        }
                         json = new StringBuilder(json).append("\"" + node.getNodeName() + "\" : \"" + node.getTextContent() + "\",\n").toString();
                         this.alreadyVisited.add(node);
                     }
