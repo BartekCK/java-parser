@@ -11,7 +11,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/xml/converter")
 @RequiredArgsConstructor
-public class TestController {
+public class ConverterController {
 
     private final JsonConverter jsonConverter;
 
