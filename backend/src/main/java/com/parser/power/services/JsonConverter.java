@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
+import com.parser.power.models.CsvNodeDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.*;
@@ -25,8 +26,47 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class JsonConverter {
 
-    public String convertFromCsvToJson(String csv) {
-        return null;
+    public String convertFromCsvToJson(String mainNodeName, String csv) {
+        List<CsvNodeDto> csvNodes = getCsvNodesObjects(csv);
+        String json;
+        json = "{\n\"" + mainNodeName + "\" : [\n";
+        json = new StringBuilder(json).append("]\n}\n").toString();
+        System.out.println(json);
+        String[] lines = csv.split("\r\n", 2);
+        for(int i = 1; i<lines.length;i++){
+            String[] columns = lines[i].split(",");
+            //wypisanie elementow
+        }
+        return json;
+    }
+
+    private List<CsvNodeDto> getCsvNodesObjects(String csv) {
+        String firstLine = csv.split("\r\n", 2)[0];
+        String[] columns = firstLine.split(",");
+        List<CsvNodeDto> csvNodes = new ArrayList<>();
+        int counter = 0;
+        for (String column : columns) {
+            String[] nodeElements = column.split("_");
+            int elementsCount = nodeElements.length;
+            String parent = null;
+            for (String element : nodeElements) {
+                if (!csvNodes.stream().anyMatch(n -> n.getName().equals(element))) {
+                    CsvNodeDto node = CsvNodeDto.builder()
+                            .name(element)
+                            .build();
+                        node.setColumn(counter++);
+                        node.setFullName(column);
+                        node.setParentName(parent);
+
+                        parent = element;
+
+                    csvNodes.add(node);
+                }
+                if (elementsCount > 1)
+                    parent = element;
+            }
+        }
+        return csvNodes;
     }
 
     public Map<Node, List<Node>> alreadyVisitedAttr = new HashMap<>();
@@ -53,13 +93,28 @@ public class JsonConverter {
         Element root = document.getDocumentElement();
         NodeList nList = document.getElementsByTagName(root.getNodeName());
         json = new StringBuilder(json).append("{\n").toString();
-        visitChildNodes(nList);
+        visitJsonToXmlChildNodes(nList);
         json = new StringBuilder(json).append("}\n").toString();
         json = json.replace(",\n}", "\n}");
         return json;
     }
 
-    private void visitChildNodes(NodeList nList) {
+
+    public String convertFromJsonToCsv(String json) {
+        return null;
+    }
+
+    public String convertFromJsonToXml(String json) {
+        return null;
+    }
+
+    public String convertFromJsonToYaml(String json) throws JsonProcessingException {
+        JsonNode jsonNode = new ObjectMapper().readTree(json);
+        String badYaml = new YAMLMapper().writeValueAsString(jsonNode);
+        return badYaml.substring(4);
+    }
+
+    private void visitJsonToXmlChildNodes(NodeList nList) {
         for (int temp = 0; temp < nList.getLength(); temp++) {
             Node node = nList.item(temp);
             if (node.getNodeType() == Node.ELEMENT_NODE) {
@@ -77,10 +132,9 @@ public class JsonConverter {
                     }
                 }
                 NodeList nl = ((Element) node).getElementsByTagName("*");
-                NodeList siblings = ((Element) node).getElementsByTagName(node.getNodeName());
                 if (nl.getLength() > 0) {
                     json = new StringBuilder(json).append("\"" + node.getNodeName() + "\" : {\n").toString();
-                    visitChildNodes(nl);
+                    visitJsonToXmlChildNodes(nl);
                     json = new StringBuilder(json).append("},\n").toString();
                 } else {
                     if (!alreadyVisited.contains(node)) {
@@ -90,20 +144,6 @@ public class JsonConverter {
                 }
             }
         }
-    }
-
-    public String convertFromJsonToCsv(String json) {
-        return null;
-    }
-
-    public String convertFromJsonToXml(String json) {
-        return null;
-    }
-
-    public String convertFromJsonToYaml(String json) throws JsonProcessingException {
-        JsonNode jsonNode = new ObjectMapper().readTree(json);
-        String badYaml = new YAMLMapper().writeValueAsString(jsonNode);
-        return badYaml.substring(4);
     }
 
 }

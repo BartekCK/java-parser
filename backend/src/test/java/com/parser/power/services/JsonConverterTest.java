@@ -31,4 +31,15 @@ public class JsonConverterTest {
         //then
         JSONAssert.assertEquals(expectedResponse, result, false);
     }
+
+    @Test
+    void shouldConvertFromCsvToJson() throws IOException, SAXException, ParserConfigurationException, JSONException {
+        //given
+        String request = new String(getClass().getClassLoader().getResourceAsStream("csv/example3.csv").readAllBytes());
+        String expectedResponse = new String(getClass().getClassLoader().getResourceAsStream("json/example3.json").readAllBytes());
+        //when
+        String result = jsonConverter.convertFromCsvToJson("employees", request);
+        //then
+        //JSONAssert.assertEquals(expectedResponse, result, false);
+    }
 }

@@ -1,0 +1,17 @@
+{
+  "employees": [
+    {
+      "id": "1d3e-1d3e-1d3e",
+      "name": "John",
+      "surname": "Smith",
+      "contact": {
+        "address": {
+          "city": "London",
+          "street": "New",
+          "apartment": "123a"
+        },
+        "phoneNumber": "534129079"
+      }
+    }
+  ]
+}
