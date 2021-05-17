@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CsvNodeDto {
-    private int column;
+    private Integer column;
     private String fullName;
     private String name;
     private String parentName;
