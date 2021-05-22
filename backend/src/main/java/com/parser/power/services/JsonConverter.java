@@ -27,44 +27,46 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class JsonConverter {
 
+    public List<CsvNodeDto> alreadyVisitedCsvNodes = new ArrayList<>();
+
     public String convertFromCsvToJson(String mainNodeName, String csv) {
         List<CsvNodeDto> csvNodes = getCsvNodesObjects(csv);
         String json;
         json = new StringBuilder("{\n\"" + mainNodeName + "\" : [\n").toString();
-        String[] lines = csv.split("\r\n", 2);
+        String[] lines = csv.split("\r\n");
         for (int i = 1; i < lines.length; i++) {
             String[] columns = lines[i].split(",");
             json = new StringBuilder(json).append("{\n").toString();
-            for (CsvNodeDto node : csvNodes) {
-                if (node.getParentName() == null && node.getColumn() != null) {
-                    String name = node.getName();
-                    String columnName = columns[node.getColumn()].trim();
-                    json = new StringBuilder(json).append("\"").append(name).append("\" : \"").append(columnName).append("\",\n").toString();
-                }
-                   // json = visitChildNodes(csvNodes, json, columns);
-            }
-            json = new StringBuilder(json).append("}\n").toString();
+            json = visitChildNodes(csvNodes, json, columns);
+            json = new StringBuilder(json).append("},\n").toString();
+            alreadyVisitedCsvNodes = new ArrayList<>();
         }
         json = new StringBuilder(json).append("]\n}\n").toString();
         json = json.replace(",\n}", "\n}");
+        json = json.replace("\n},\n]", "\n}\n]");
         System.out.println(json);
         return json;
     }
 
-/*    private String visitChildNodes(List<CsvNodeDto> csvNodes, String json, String[] columns) {
-        for(CsvNodeDto node : csvNodes) {
-            if (node.getParentName() == null && node.getColumn() == null) {
-                json = new StringBuilder(json).append("\"" + node.getName() + "\" : {\n").toString();
-                csvNodes = csvNodes.stream().filter(n -> n.getParentName().equals(node.getName())).collect(Collectors.toList());
-                visitChildNodes(csvNodes, json, columns);
-                json = new StringBuilder(json).append("},\n").toString();
+    private String visitChildNodes(List<CsvNodeDto> csvNodes, String json, String[] columns) {
+        for (CsvNodeDto node : csvNodes) {
+            if ( node.getColumn() == null) {
+                List<CsvNodeDto> childNodes = csvNodes.stream()
+                        .filter(n -> n.getParentName()!= null && !n.getParentName().equals(node.getName()))
+                                .collect(Collectors.toList());
+                if(!alreadyVisitedCsvNodes.stream().anyMatch(n -> n.getName().equals(node.getName())) && childNodes.size()>0){
+                    alreadyVisitedCsvNodes.add(node);
+                    json = new StringBuilder(json).append("\"" + node.getName() + "\" : {\n").toString();
+                    visitChildNodes(childNodes, json, columns);
+                    json = new StringBuilder(json).append("},\n").toString();
+                }
             }
             if (node.getColumn() != null) {
                 json = new StringBuilder(json).append("\"").append(node.getName()).append("\" : \"").append(columns[node.getColumn()].trim()).append("\",\n").toString();
             }
         }
         return json;
-    }*/
+    }
 
     private List<CsvNodeDto> getCsvNodesObjects(String csv) {
         String firstLine = csv.split("\r\n", 2)[0];
