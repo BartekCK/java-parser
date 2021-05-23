@@ -1,6 +1,7 @@
 package com.parser.power.services;
 
 import org.json.JSONException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -12,6 +13,8 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+
+import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -29,7 +32,7 @@ public class JsonConverterTest {
         //when
         String result = jsonConverter.convertFromXmlToJson(request);
         //then
-        JSONAssert.assertEquals(expectedResponse, result, false);
+        assertEquals(expectedResponse, result, false);
     }
 
     @Test
@@ -40,6 +43,17 @@ public class JsonConverterTest {
         //when
         String result = jsonConverter.convertFromCsvToJson("employees", request);
         //then
-        JSONAssert.assertEquals(expectedResponse, result, false);
+        assertEquals(expectedResponse, result, false);
+    }
+
+    @Test
+    void shouldConvertFromJsonToCsv() throws IOException, SAXException, ParserConfigurationException, JSONException, org.springframework.boot.configurationprocessor.json.JSONException {
+        //given
+        String request = new String(getClass().getClassLoader().getResourceAsStream("json/example3.json").readAllBytes());
+        String expectedResponse = new String(getClass().getClassLoader().getResourceAsStream("csv/example3.csv").readAllBytes());
+        //when
+        String result = jsonConverter.convertFromJsonToCsv(request);
+        //then
+        Assertions.assertEquals(expectedResponse, result);
     }
 }
