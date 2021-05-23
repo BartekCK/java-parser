@@ -12,6 +12,19 @@
         },
         "phoneNumber": "534129079"
       }
+    },
+    {
+      "id": "1d3d-1d3d-1d3d",
+      "name": "Anna",
+      "surname": "Goth",
+      "contact": {
+        "address": {
+          "city": "Brighton",
+          "street": "Old",
+          "apartment": "14"
+        },
+        "phoneNumber": "533109456"
+      }
     }
   ]
 }

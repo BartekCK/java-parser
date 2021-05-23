@@ -40,6 +40,6 @@ public class JsonConverterTest {
         //when
         String result = jsonConverter.convertFromCsvToJson("employees", request);
         //then
-        //JSONAssert.assertEquals(expectedResponse, result, false);
+        JSONAssert.assertEquals(expectedResponse, result, false);
     }
 }
