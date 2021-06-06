@@ -132,17 +132,6 @@ public class JsonConverter {
         return json;
     }
 
-/*    public String convertFromJsonToCsv(String json, String mainNodeName) throws JSONException {
-        JSONObject jsonObj = new JSONObject(json);
-        JSONArray docs = jsonObj.getJSONArray(mainNodeName);
-
-        for (JSON doc: docs) {
-
-        }
-        //return getDocs(docs);
-
-    }*/
-
     public String convertFromJsonToCsv(String json) throws JSONException {
         JSONObject jsonObj = new JSONObject(json);
         JSONArray docs = jsonObj.getJSONArray("employees");
@@ -152,15 +141,15 @@ public class JsonConverter {
 
     public String getDocs(JSONArray ja) throws JSONException {
         String result = "";
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> map = new LinkedHashMap<>();
         for (int i = 0; i < ja.length(); i++) {
             JSONObject jo = ja.optJSONObject(i);
             if (jo != null) {
                 getAllTopKeyAndValue(jo, map, "");
                 if (i == 0) {
-                    result += keyOfMap2String(map) + "\n";
+                    result += keyOfMap2String(map) + "\r\n";
                 }
-                result += valueOfMap2String(map) + "\n";
+                result += valueOfMap2String(map) + "\r\n";
             }
         }
         return result;
