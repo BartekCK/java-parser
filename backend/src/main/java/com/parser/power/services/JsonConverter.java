@@ -132,6 +132,16 @@ public class JsonConverter {
         return json;
     }
 
+/*    public String convertFromJsonToCsv(String json, String mainNodeName) throws JSONException {
+        JSONObject jsonObj = new JSONObject(json);
+        JSONArray docs = jsonObj.getJSONArray(mainNodeName);
+
+        for (JSON doc: docs) {
+
+        }
+        //return getDocs(docs);
+
+    }*/
 
     public String convertFromJsonToCsv(String json) throws JSONException {
         JSONObject jsonObj = new JSONObject(json);
@@ -140,13 +150,13 @@ public class JsonConverter {
 
     }
 
-    public static String getDocs(JSONArray ja) throws JSONException {
+    public String getDocs(JSONArray ja) throws JSONException {
         String result = "";
         Map<String, String> map = new HashMap<>();
         for (int i = 0; i < ja.length(); i++) {
             JSONObject jo = ja.optJSONObject(i);
             if (jo != null) {
-                getAllTopKeyAndValue(jo, map);
+                getAllTopKeyAndValue(jo, map, "");
                 if (i == 0) {
                     result += keyOfMap2String(map) + "\n";
                 }
@@ -157,7 +167,7 @@ public class JsonConverter {
     }
 
 
-    public static void getAllTopKeyAndValue(JSONObject jo, Map<String, String> map) throws JSONException {
+    public void getAllTopKeyAndValue(JSONObject jo, Map<String, String> map, String parentName) throws JSONException {
         if (jo != null) {
             JSONArray names = jo.names();
             String string = "";
@@ -167,16 +177,16 @@ public class JsonConverter {
                     String name = names.getString(i);
                     JSONObject object = jo.optJSONObject(name);
                     if (object != null) {
-                        getAllTopKeyAndValue(object, map);
+                            getAllTopKeyAndValue(object, map, parentName + name + "_");
                     } else {
-                        map.put(name, (String) jo.get(name));
+                        map.put(parentName + name, (String) jo.get(name));
                     }
                 }
             }
         }
     }
 
-    public static String keyOfMap2String(Map<String, String> map) {
+    public String keyOfMap2String(Map<String, String> map) {
         String result = "";
         Iterator<Map.Entry<String, String>> iter = map.entrySet().iterator();
         while (iter.hasNext()) {
@@ -189,7 +199,7 @@ public class JsonConverter {
         return result;
     }
 
-    public static String valueOfMap2String(Map<String, String> map) {
+    public String valueOfMap2String(Map<String, String> map) {
         String result = "";
         Iterator<Map.Entry<String, String>> iter = map.entrySet().iterator();
         while (iter.hasNext()) {
