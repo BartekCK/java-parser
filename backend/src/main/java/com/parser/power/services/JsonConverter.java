@@ -147,12 +147,12 @@ public class JsonConverter {
 
     public String getJsonXmlDocs(JSONObject ja, String main) throws JSONException {
         String result = "";
-        Map<String, String> map = new LinkedHashMap<>();
+        Map<String, List<String>> map = new LinkedHashMap<>();
         result += "<" + main + ">\r\n";
         for (int i = 0; i < ja.length(); i++) {
             JSONObject jo = ja.optJSONObject(main);
             if (jo != null) {
-                getAllTopKeyAndValue(jo, map, "");
+                getAllTopKeyAndValueJsonToXml(jo, map, "");
                 result = getResult(result, "", map);
             }
         }
@@ -160,22 +160,24 @@ public class JsonConverter {
         return result;
     }
 
-    private String getResult(String result, String replacement, Map<String, String> map) {
-        Iterator<Map.Entry<String, String>> iter = map.entrySet().iterator();
+    private String getResult(String result, String replacement, Map<String, List<String>> map) {
+        Iterator<Map.Entry<String, List<String>>> iter = map.entrySet().iterator();
         while (iter.hasNext()) {
-            Map.Entry<String, String> entry = iter.next();
+            Map.Entry<String, List<String>> entry = iter.next();
             if(visitedJsonXmlNodes.contains(entry.getKey())){
                 continue;
             }
             if (!entry.getKey().replace(replacement, "").contains("_")) {
-                result += "<" + entry.getKey().replace(replacement, "") + ">";
-                result += entry.getValue();
-                result += "</" + entry.getKey().replace(replacement, "") + ">\r\n";
+                for(int k=0;k<entry.getValue().size();k++) {
+                    result += "<" + entry.getKey().replace(replacement, "") + ">";
+                    result += entry.getValue().get(k);
+                    result += "</" + entry.getKey().replace(replacement, "") + ">\r\n";
+                }
                 visitedJsonXmlNodes.add(entry.getKey());
             } else {
                 String key = entry.getKey().substring(0, entry.getKey().indexOf("_"));
-                Map<String, String> childs = new LinkedHashMap<>();
-                for (Map.Entry<String, String> child : map.entrySet()) {
+                Map<String, List<String>> childs = new LinkedHashMap<>();
+                for (Map.Entry<String, List<String>> child : map.entrySet()) {
                     String replacedKey = child.getKey().replace(replacement, "");
                     if (replacedKey.contains(key)) {
                         childs.put(child.getKey(), child.getValue());
@@ -225,6 +227,40 @@ public class JsonConverter {
                 }
             }
         }
+    }
+
+    public void getAllTopKeyAndValueJsonToXml(JSONObject jo, Map<String, List<String>> map, String parentName) throws JSONException {
+        if (jo != null) {
+            JSONArray names = jo.names();
+            String string = "";
+            List integers = new ArrayList<>();
+            if (names != null) {
+                for (int i = 0; i < names.length(); i++) {
+                    String name = names.getString(i);
+                    JSONObject object = jo.optJSONObject(name);
+                    JSONArray array = jo.optJSONArray(name);
+                    if (object != null) {
+                        getAllTopKeyAndValueJsonToXml(object, map, parentName + name + "_");
+                    } else if(array!=null){
+                        List<String> elements = new ArrayList<>(Arrays.asList(toStringArray(array)));
+                        map.put(parentName + name, elements);
+                    } else {
+                        map.put(parentName + name, Collections.singletonList((String) jo.get(name)));
+                    }
+                }
+            }
+        }
+    }
+
+    public static String[] toStringArray(JSONArray array) {
+        if(array==null)
+            return null;
+
+        String[] arr=new String[array.length()];
+        for(int i=0; i<arr.length; i++) {
+            arr[i]=array.optString(i);
+        }
+        return arr;
     }
 
     public void getAllTopKeyAndValue(JSONObject jo, Map<String, String> map, String parentName) throws JSONException {

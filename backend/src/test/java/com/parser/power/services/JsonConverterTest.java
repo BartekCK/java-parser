@@ -39,12 +39,12 @@ public class JsonConverterTest  {
     @Test
     void shouldConvertFromJsonToXml() throws IOException, SAXException, ParserConfigurationException, JSONException, org.springframework.boot.configurationprocessor.json.JSONException {
         //given
-        String request = new String(getClass().getClassLoader().getResourceAsStream("json/example2.json").readAllBytes());
-        String expectedResponse = new String(getClass().getClassLoader().getResourceAsStream("xml/example2.xml").readAllBytes());
+        String request = new String(getClass().getClassLoader().getResourceAsStream("json/example4.json").readAllBytes());
+        String expectedResponse = new String(getClass().getClassLoader().getResourceAsStream("xml/example4.xml").readAllBytes());
         //when
         String result = jsonConverter.convertFromJsonToXml(request);
         //then
-        assertThat(expectedResponse, CompareMatcher.isIdenticalTo(result));
+        assertThat(expectedResponse, CompareMatcher.isIdenticalTo(result).ignoreWhitespace());
     }
 
     @Test
