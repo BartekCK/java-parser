@@ -4,21 +4,23 @@ import org.json.JSONException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.xml.sax.SAXException;
+import org.xmlunit.matchers.CompareMatcher;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 
-import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 @SpringBootTest
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
-public class JsonConverterTest {
+public class JsonConverterTest  {
 
     @Autowired
     private JsonConverter jsonConverter;
@@ -31,7 +33,7 @@ public class JsonConverterTest {
         //when
         String result = jsonConverter.convertFromXmlToJson(request);
         //then
-        assertEquals(expectedResponse, result, false);
+        JSONAssert.assertEquals(expectedResponse, result, false);
     }
 
     @Test
@@ -42,7 +44,7 @@ public class JsonConverterTest {
         //when
         String result = jsonConverter.convertFromJsonToXml(request);
         //then
-        Assertions.assertTrue(result.equals(expectedResponse));
+        assertThat(expectedResponse, CompareMatcher.isIdenticalTo(result));
     }
 
     @Test
@@ -53,7 +55,7 @@ public class JsonConverterTest {
         //when
         String result = jsonConverter.convertFromCsvToJson("employees", request);
         //then
-        assertEquals(expectedResponse, result, false);
+        JSONAssert.assertEquals(expectedResponse, result, false);
     }
 
     @Test

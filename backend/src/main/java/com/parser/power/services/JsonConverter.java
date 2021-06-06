@@ -29,6 +29,7 @@ public class JsonConverter {
 
     public List<CsvNodeDto> alreadyVisitedCsvNodes = new ArrayList<>();
     public List<String> visitedColumns = new ArrayList<>();
+    public List<String> visitedJsonXmlNodes = new ArrayList<>();
 
     public String convertFromCsvToJson(String mainNodeName, String csv) {
         List<CsvNodeDto> csvNodes = getCsvNodesObjects(csv);
@@ -152,34 +153,41 @@ public class JsonConverter {
             JSONObject jo = ja.optJSONObject(main);
             if (jo != null) {
                 getAllTopKeyAndValue(jo, map, "");
-                Iterator<Map.Entry<String, String>> iter = map.entrySet().iterator();
-                while (iter.hasNext()) {
-                    Map.Entry<String, String> entry = iter.next();
-                    result = getResult(result, entry, map);
-/*                    if (iter.hasNext()) {
-                        result += ",";
-                    }*/
-                }
-/*                if (i == 0) {
-                    result += keyOfMap2String(map) + "\r\n";
-                }
-                result += valueOfMap2String(map) + "\r\n";*/
+                result = getResult(result, "", map);
             }
         }
         result += "</" + main + ">";
         return result;
     }
 
-    private String getResult(String result, Map.Entry<String, String> entry, Map<String, String> map) {
-        if (!entry.getKey().contains("_")) {
-            result += "<" + entry.getKey() + ">";
-            result += entry.getValue();
-            result += "</" + entry.getKey() + ">\r\n";
-        } else {
-            String key = entry.getKey().substring(0, entry.getKey().indexOf("_"));
-            result += "<" + key + ">";
-            result = getResult(result, entry, map);
-            result += "</" + key + ">\r\n";
+    private String getResult(String result, String replacement, Map<String, String> map) {
+        Iterator<Map.Entry<String, String>> iter = map.entrySet().iterator();
+        while (iter.hasNext()) {
+            Map.Entry<String, String> entry = iter.next();
+            if(visitedJsonXmlNodes.contains(entry.getKey())){
+                continue;
+            }
+            if (!entry.getKey().replace(replacement, "").contains("_")) {
+                result += "<" + entry.getKey().replace(replacement, "") + ">";
+                result += entry.getValue();
+                result += "</" + entry.getKey().replace(replacement, "") + ">\r\n";
+                visitedJsonXmlNodes.add(entry.getKey());
+            } else {
+                String key = entry.getKey().substring(0, entry.getKey().indexOf("_"));
+                Map<String, String> childs = new LinkedHashMap<>();
+                for (Map.Entry<String, String> child : map.entrySet()) {
+                    String replacedKey = child.getKey().replace(replacement, "");
+                    if (replacedKey.contains(key)) {
+                        childs.put(child.getKey(), child.getValue());
+                    }
+                }
+                replacement = entry.getKey().substring(0, entry.getKey().indexOf("_") + 1);
+                result += "<" + key + ">\r\n";
+                if(childs.size()>0) {
+                    result = getResult(result, replacement, childs);
+                }
+                result += "</" + key + ">\r\n";
+            }
         }
         return result;
     }
