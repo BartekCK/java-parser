@@ -126,26 +126,71 @@ public class JsonConverter {
         Element root = document.getDocumentElement();
         NodeList nList = document.getElementsByTagName(root.getNodeName());
         json = new StringBuilder(json).append("{\n").toString();
-        visitJsonToXmlChildNodes(nList);
+        visitXmlToJsonChildNodes(nList);
         json = new StringBuilder(json).append("}\n").toString();
         json = json.replace(",\n}", "\n}");
         return json;
     }
 
-    public String convertFromJsonToCsv(String json) throws JSONException {
+    public String convertFromJsonToCsv(String json, String mainNodeName) throws JSONException {
         JSONObject jsonObj = new JSONObject(json);
-        JSONArray docs = jsonObj.getJSONArray("employees");
-        return getDocs(docs);
+        JSONArray docs = jsonObj.getJSONArray(mainNodeName);
+        return getJsonCsvDocs(docs);
 
     }
 
-    public String getDocs(JSONArray ja) throws JSONException {
+    public String convertFromJsonToXml(String json) throws JSONException {
+        JSONObject jsonObj = new JSONObject(json);
+        return getJsonXmlDocs(jsonObj, "book");
+    }
+
+    public String getJsonXmlDocs(JSONObject ja, String main) throws JSONException {
+        String result = "";
+        Map<String, String> map = new LinkedHashMap<>();
+        result += "<" + main + ">\r\n";
+        for (int i = 0; i < ja.length(); i++) {
+            JSONObject jo = ja.optJSONObject(main);
+            if (jo != null) {
+                getAllTopKeyAndValue(jo, map, "");
+                Iterator<Map.Entry<String, String>> iter = map.entrySet().iterator();
+                while (iter.hasNext()) {
+                    Map.Entry<String, String> entry = iter.next();
+                    result = getResult(result, entry, map);
+/*                    if (iter.hasNext()) {
+                        result += ",";
+                    }*/
+                }
+/*                if (i == 0) {
+                    result += keyOfMap2String(map) + "\r\n";
+                }
+                result += valueOfMap2String(map) + "\r\n";*/
+            }
+        }
+        result += "</" + main + ">";
+        return result;
+    }
+
+    private String getResult(String result, Map.Entry<String, String> entry, Map<String, String> map) {
+        if (!entry.getKey().contains("_")) {
+            result += "<" + entry.getKey() + ">";
+            result += entry.getValue();
+            result += "</" + entry.getKey() + ">\r\n";
+        } else {
+            String key = entry.getKey().substring(0, entry.getKey().indexOf("_"));
+            result += "<" + key + ">";
+            result = getResult(result, entry, map);
+            result += "</" + key + ">\r\n";
+        }
+        return result;
+    }
+
+    public String getJsonCsvDocs(JSONArray ja) throws JSONException {
         String result = "";
         Map<String, String> map = new LinkedHashMap<>();
         for (int i = 0; i < ja.length(); i++) {
             JSONObject jo = ja.optJSONObject(i);
             if (jo != null) {
-                getAllTopKeyAndValue(jo, map, "");
+                getAllTopKeyAndValueToXml(jo, map, "");
                 if (i == 0) {
                     result += keyOfMap2String(map) + "\r\n";
                 }
@@ -155,6 +200,24 @@ public class JsonConverter {
         return result;
     }
 
+    public void getAllTopKeyAndValueToXml(JSONObject jo, Map<String, String> map, String parentName) throws JSONException {
+        if (jo != null) {
+            JSONArray names = jo.names();
+            String string = "";
+            List integers = new ArrayList<>();
+            if (names != null) {
+                for (int i = 0; i < names.length(); i++) {
+                    String name = names.getString(i);
+                    JSONObject object = jo.optJSONObject(name);
+                    if (object != null) {
+                        getAllTopKeyAndValue(object, map, parentName + name + "_");
+                    } else {
+                        map.put(parentName + name, (String) jo.get(name));
+                    }
+                }
+            }
+        }
+    }
 
     public void getAllTopKeyAndValue(JSONObject jo, Map<String, String> map, String parentName) throws JSONException {
         if (jo != null) {
@@ -166,7 +229,7 @@ public class JsonConverter {
                     String name = names.getString(i);
                     JSONObject object = jo.optJSONObject(name);
                     if (object != null) {
-                            getAllTopKeyAndValue(object, map, parentName + name + "_");
+                        getAllTopKeyAndValue(object, map, parentName + name + "_");
                     } else {
                         map.put(parentName + name, (String) jo.get(name));
                     }
@@ -201,17 +264,13 @@ public class JsonConverter {
         return result;
     }
 
-    public String convertFromJsonToXml(String json) {
-        return null;
-    }
-
     public String convertFromJsonToYaml(String json) throws JsonProcessingException {
         JsonNode jsonNode = new ObjectMapper().readTree(json);
         String badYaml = new YAMLMapper().writeValueAsString(jsonNode);
         return badYaml.substring(4);
     }
 
-    private void visitJsonToXmlChildNodes(NodeList nList) {
+    private void visitXmlToJsonChildNodes(NodeList nList) {
         for (int temp = 0; temp < nList.getLength(); temp++) {
             Node node = nList.item(temp);
             if (node.getNodeType() == Node.ELEMENT_NODE) {
@@ -231,7 +290,7 @@ public class JsonConverter {
                 NodeList nl = ((Element) node).getElementsByTagName("*");
                 if (nl.getLength() > 0) {
                     json = new StringBuilder(json).append("\"" + node.getNodeName() + "\" : {\n").toString();
-                    visitJsonToXmlChildNodes(nl);
+                    visitXmlToJsonChildNodes(nl);
                     json = new StringBuilder(json).append("},\n").toString();
                 } else {
                     if (!alreadyVisited.contains(node)) {
