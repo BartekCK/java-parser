@@ -20,7 +20,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @SpringBootTest
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
-public class JsonConverterTest  {
+public class JsonConverterTest {
 
     @Autowired
     private JsonConverter jsonConverter;
@@ -37,7 +37,7 @@ public class JsonConverterTest  {
     }
 
     @Test
-    void shouldConvertFromJsonToXml() throws IOException, SAXException, ParserConfigurationException, JSONException, org.springframework.boot.configurationprocessor.json.JSONException {
+    void shouldConvertFromJsonToXml() throws IOException, org.springframework.boot.configurationprocessor.json.JSONException {
         //given
         String request = new String(getClass().getClassLoader().getResourceAsStream("json/example4.json").readAllBytes());
         String expectedResponse = new String(getClass().getClassLoader().getResourceAsStream("xml/example4.xml").readAllBytes());
@@ -48,7 +48,7 @@ public class JsonConverterTest  {
     }
 
     @Test
-    void shouldConvertFromCsvToJson() throws IOException, SAXException, ParserConfigurationException, JSONException {
+    void shouldConvertFromCsvToJson() throws IOException, JSONException {
         //given
         String request = new String(getClass().getClassLoader().getResourceAsStream("csv/example3.csv").readAllBytes());
         String expectedResponse = new String(getClass().getClassLoader().getResourceAsStream("json/example3.json").readAllBytes());
@@ -59,7 +59,7 @@ public class JsonConverterTest  {
     }
 
     @Test
-    void shouldConvertFromJsonToCsv() throws IOException, SAXException, ParserConfigurationException, JSONException, org.springframework.boot.configurationprocessor.json.JSONException {
+    void shouldConvertFromJsonToCsv() throws IOException, org.springframework.boot.configurationprocessor.json.JSONException {
         //given
         String request = new String(getClass().getClassLoader().getResourceAsStream("json/example3.json").readAllBytes());
         String expectedResponse = new String(getClass().getClassLoader().getResourceAsStream("csv/example3.csv").readAllBytes());

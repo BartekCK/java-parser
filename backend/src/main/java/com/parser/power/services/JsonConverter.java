@@ -35,7 +35,8 @@ public class JsonConverter {
         List<CsvNodeDto> csvNodes = getCsvNodesObjects(csv);
         String json;
         json = new StringBuilder("{\n\"" + mainNodeName + "\" : [\n").toString();
-        String[] lines = csv.split("\r\n");
+        //csv = csv.replace("\n","\r\n");
+        String[] lines = csv.split("\n");
         for (int i = 1; i < lines.length; i++) {
             String[] columns = lines[i].split(",");
             json = new StringBuilder(json).append("{\n").toString();
@@ -164,11 +165,11 @@ public class JsonConverter {
         Iterator<Map.Entry<String, List<String>>> iter = map.entrySet().iterator();
         while (iter.hasNext()) {
             Map.Entry<String, List<String>> entry = iter.next();
-            if(visitedJsonXmlNodes.contains(entry.getKey())){
+            if (visitedJsonXmlNodes.contains(entry.getKey())) {
                 continue;
             }
             if (!entry.getKey().replace(replacement, "").contains("_")) {
-                for(int k=0;k<entry.getValue().size();k++) {
+                for (int k = 0; k < entry.getValue().size(); k++) {
                     result += "<" + entry.getKey().replace(replacement, "") + ">";
                     result += entry.getValue().get(k);
                     result += "</" + entry.getKey().replace(replacement, "") + ">\r\n";
@@ -185,7 +186,7 @@ public class JsonConverter {
                 }
                 replacement = entry.getKey().substring(0, entry.getKey().indexOf("_") + 1);
                 result += "<" + key + ">\r\n";
-                if(childs.size()>0) {
+                if (childs.size() > 0) {
                     result = getResult(result, replacement, childs);
                 }
                 result += "</" + key + ">\r\n";
@@ -241,7 +242,7 @@ public class JsonConverter {
                     JSONArray array = jo.optJSONArray(name);
                     if (object != null) {
                         getAllTopKeyAndValueJsonToXml(object, map, parentName + name + "_");
-                    } else if(array!=null){
+                    } else if (array != null) {
                         List<String> elements = new ArrayList<>(Arrays.asList(toStringArray(array)));
                         map.put(parentName + name, elements);
                     } else {
@@ -253,12 +254,12 @@ public class JsonConverter {
     }
 
     public static String[] toStringArray(JSONArray array) {
-        if(array==null)
+        if (array == null)
             return null;
 
-        String[] arr=new String[array.length()];
-        for(int i=0; i<arr.length; i++) {
-            arr[i]=array.optString(i);
+        String[] arr = new String[array.length()];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = array.optString(i);
         }
         return arr;
     }
