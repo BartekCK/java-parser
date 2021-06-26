@@ -40,7 +40,19 @@ public class JsonConverterTest {
     }
 
     @Test
-    void shouldConvertFromXmlToCsv() throws IOException, SAXException, ParserConfigurationException, JSONException {
+    void shouldConvertFromXmlToCsv() throws IOException, JSONException, ParserConfigurationException, SAXException, org.springframework.boot.configurationprocessor.json.JSONException {
+        //given
+        String request = new String(getClass().getClassLoader().getResourceAsStream("xml/example3.xml").readAllBytes());
+        String expectedResponse = new String(getClass().getClassLoader().getResourceAsStream("csv/example3.csv").readAllBytes());
+        //when
+        String result = csvXmlConverter.convertFromXmlToCsv("root", "row",request);
+        //then
+        Assertions.assertEquals(expectedResponse, result);
+    }
+
+
+    @Test
+    void shouldConvertFromXmlToJson() throws IOException, SAXException, ParserConfigurationException, JSONException {
         //given
         String request = new String(getClass().getClassLoader().getResourceAsStream("xml/example2.xml").readAllBytes());
         String expectedResponse = new String(getClass().getClassLoader().getResourceAsStream("json/example2.json").readAllBytes());

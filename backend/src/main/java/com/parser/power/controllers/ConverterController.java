@@ -19,17 +19,17 @@ public class ConverterController {
     private final JsonConverter jsonConverter;
     private final CsvXmlConverter csvConverter;
 
-    @PostMapping(value = "/xml/converter/json", produces= MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/xml/converter/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public String convertXmlToJson(@RequestBody String xml) throws IOException, SAXException, ParserConfigurationException {
         return jsonConverter.convertFromXmlToJson(xml);
     }
 
-    @PostMapping(value = "/json/converter/xml", produces= MediaType.APPLICATION_XML_VALUE)
+    @PostMapping(value = "/json/converter/xml", produces = MediaType.APPLICATION_XML_VALUE)
     public String convertJsonToXml(@RequestBody String json) throws JSONException {
         return jsonConverter.convertFromJsonToXml(json);
     }
 
-    @PostMapping(value = "/csv/converter/json/{mainNode}", produces= MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/csv/converter/json/{mainNode}", produces = MediaType.APPLICATION_JSON_VALUE)
     public String convertCsvToJson(@PathVariable(name = "mainNode") String mainNode, @RequestBody String csv) {
         return jsonConverter.convertFromCsvToJson(mainNode, csv);
     }
@@ -39,15 +39,18 @@ public class ConverterController {
         return jsonConverter.convertFromJsonToCsv(json, mainNode);
     }
 
-    @PostMapping(value = "/csv/converter/xml/{mainNode}/{elementName}", produces= MediaType.APPLICATION_XML_VALUE)
+    @PostMapping(value = "/csv/converter/xml/{mainNode}/{elementName}", produces = MediaType.APPLICATION_XML_VALUE)
     public String convertFromCsvToXml(@PathVariable(name = "mainNode") String mainNode,
-                                      @PathVariable(name = "elementName") String elementName,@RequestBody String xml) throws JSONException {
+                                      @PathVariable(name = "elementName") String elementName,
+                                      @RequestBody String xml) throws JSONException {
         return csvConverter.convertFromCsvToXml(mainNode, elementName, xml);
     }
 
-    @PostMapping("/xml/converter/csv/{mainNode}")
-    public String convertFromXmlToCsv(@PathVariable(name = "mainNode") String mainNode, @RequestBody String xml) throws SAXException, ParserConfigurationException, JSONException, IOException {
-        return csvConverter.convertFromXmlToCsv(mainNode, xml);
+    @PostMapping("/xml/converter/csv/{mainNode}/{elementName}")
+    public String convertFromXmlToCsv(@PathVariable(name = "mainNode") String mainNode,
+                                      @PathVariable(name = "elementName") String elementName,
+                                      @RequestBody String xml) throws SAXException, ParserConfigurationException, JSONException, IOException {
+        return csvConverter.convertFromXmlToCsv(mainNode, elementName, xml);
     }
 
 }

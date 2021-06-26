@@ -2,17 +2,17 @@ package com.parser.power.services;
 
 import com.parser.power.models.CsvNodeDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.nio.charset.Charset;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,8 +29,8 @@ public class CsvXmlConverter {
     public List<String> visitedJsonXmlNodes = new ArrayList<>();
 
     public String convertFromCsvToXml(String mainNodeName, String elementName, String csv) {
-        json="";
-        csv = csv.replace("\n","\r\n");
+        json = "";
+        csv = csv.replace("\n", "\r\n");
         List<CsvNodeDto> csvNodes = getCsvNodesObjects(csv);
         String json;
         json = new StringBuilder("<" + mainNodeName + ">\n").toString();
@@ -102,8 +102,35 @@ public class CsvXmlConverter {
         return csvNodes;
     }
 
-    public String convertFromXmlToCsv(String mainNode, String xml) throws JSONException, IOException, SAXException, ParserConfigurationException {
-        String json = jsonConverter.convertFromXmlToJson(xml);
-        return jsonConverter.convertFromJsonToCsv(mainNode, json);
+    public String generateRandomString(){
+        return UUID.randomUUID().toString().replaceAll("[^a-zA-Z]", "");
+    }
+
+    public String convertFromXmlToCsv(String mainNode, String mainElement, String xml) throws JSONException, IOException, SAXException, ParserConfigurationException {
+        List<String> jsonArrayNodesNames = new ArrayList<>();
+        List<String> list = Arrays.asList(xml.split("\n"));
+        List<String> result = new ArrayList<>();
+        String generated = null;
+        for (String element : list) {
+            if (element.contains(String.format("<%s>", mainElement))) {
+                generated = generateRandomString();
+                element = element.replace((String.format("<%s>", mainElement)), String.format("<%s>", generated));
+                jsonArrayNodesNames.add(generated);
+            } else if (element.contains(String.format("</%s>", mainElement))) {
+                element = element.replace((String.format("</%s>", mainElement)), String.format("</%s>", generated));
+            }
+            result.add(element);
+        }
+        xml = String.join("\n", result);
+        String json = jsonConverter.convertFromXmlToJson( xml);
+        JSONArray jsonArray = new JSONArray();
+        JSONObject object = new JSONObject(json).getJSONObject(mainNode);
+        for (String element : jsonArrayNodesNames) {
+            jsonArray.put(object.getJSONObject(element));
+        }
+        JSONObject mainObj = new JSONObject();
+        mainObj.put(mainNode, jsonArray);
+        String diffJson = mainObj.toString(1);
+        return jsonConverter.convertFromJsonToCsv(diffJson, mainNode);
     }
 }
