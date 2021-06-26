@@ -1,25 +1,19 @@
 {
-  "glossary": {
-    "title": "example glossary",
-    "GlossDiv": {
-      "title": "S",
-      "GlossList": {
-        "ID": "SGML",
-        "SortAs": "SGML",
-        "GlossEntry": {
-          "GlossTerm": "Standard Generalized Markup Language",
-          "Acronym": "SGML",
-          "Abbrev": "ISO 8879:1986",
-          "GlossDef": {
-            "para": "A meta-markup language, used to create markup
-            languages
-            such
-            as
-            DocBook.
-            "
-          }
-        }
-      }
-    }
+  "book" : {
+    "edited" : "whenever",
+    "title" : "Some title",
+    "description" : "some description",
+    "author" : {
+      "id" : "1",
+      "name" : "some author name"
+    },
+    "buyer" : {
+      "id" : "2",
+      "name" : "some buyer name"
+    },
+    "review" : "nice book",
+    "review" : "this book sucks",
+    "review" : "amazing work"
   }
 }
+
