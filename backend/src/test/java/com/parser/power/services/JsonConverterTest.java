@@ -25,8 +25,22 @@ public class JsonConverterTest {
     @Autowired
     private JsonConverter jsonConverter;
 
+    @Autowired
+    private CsvXmlConverter csvXmlConverter;
+
     @Test
-    void shouldConvertFromXmlToJson() throws IOException, SAXException, ParserConfigurationException, JSONException {
+    void shouldConvertFromCsvToXml() throws IOException, JSONException {
+        //given
+        String request = new String(getClass().getClassLoader().getResourceAsStream("csv/example3.csv").readAllBytes());
+        String expectedResponse = new String(getClass().getClassLoader().getResourceAsStream("xml/example3.xml").readAllBytes());
+        //when
+        String result = csvXmlConverter.convertFromCsvToXml("root", "row", request);
+        //then
+        JSONAssert.assertEquals(expectedResponse, result, false);
+    }
+
+    @Test
+    void shouldConvertFromXmlToCsv() throws IOException, SAXException, ParserConfigurationException, JSONException {
         //given
         String request = new String(getClass().getClassLoader().getResourceAsStream("xml/example2.xml").readAllBytes());
         String expectedResponse = new String(getClass().getClassLoader().getResourceAsStream("json/example2.json").readAllBytes());
@@ -36,7 +50,7 @@ public class JsonConverterTest {
         JSONAssert.assertEquals(expectedResponse, result, false);
     }
 
-    @Test
+/*    @Test
     void shouldConvertFromJsonToXml() throws IOException, org.springframework.boot.configurationprocessor.json.JSONException {
         //given
         String request = new String(getClass().getClassLoader().getResourceAsStream("json/example4.json").readAllBytes());
@@ -45,7 +59,7 @@ public class JsonConverterTest {
         String result = jsonConverter.convertFromJsonToXml(request);
         //then
         assertThat(expectedResponse, CompareMatcher.isIdenticalTo(result).ignoreWhitespace());
-    }
+    }*/
 
     @Test
     void shouldConvertFromCsvToJson() throws IOException, JSONException {

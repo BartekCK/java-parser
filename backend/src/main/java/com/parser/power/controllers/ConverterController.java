@@ -4,6 +4,7 @@ import com.parser.power.services.CsvXmlConverter;
 import com.parser.power.services.JsonConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.xml.sax.SAXException;
 
@@ -38,9 +39,10 @@ public class ConverterController {
         return jsonConverter.convertFromJsonToCsv(json, mainNode);
     }
 
-    @PostMapping("/csv/converter/xml/{mainNode}")
-    public String convertFromCsvToXml(@PathVariable(name = "mainNode") String mainNode, @RequestBody String xml) throws JSONException {
-        return csvConverter.convertFromCsvToXml(mainNode, xml);
+    @PostMapping(value = "/csv/converter/xml/{mainNode}/{elementName}", produces= MediaType.APPLICATION_XML_VALUE)
+    public String convertFromCsvToXml(@PathVariable(name = "mainNode") String mainNode,
+                                      @PathVariable(name = "elementName") String elementName,@RequestBody String xml) throws JSONException {
+        return csvConverter.convertFromCsvToXml(mainNode, elementName, xml);
     }
 
     @PostMapping("/xml/converter/csv/{mainNode}")

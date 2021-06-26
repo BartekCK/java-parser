@@ -1,0 +1,28 @@
+<elo>
+    <string>
+        <id>1d3e-1d3e-1d3e</id>
+        <name>John</name>
+        <surname>Smith</surname>
+        <contact>
+            <address>
+                <city>London</city>
+                <street>New</street>
+                <apartment>123a</apartment>
+            </address>
+            <phoneNumber>534129079</phoneNumber>
+        </contact>
+    </string>
+    <string>
+        <id>1d3d-1d3d-1d3d</id>
+        <name>Anna</name>
+        <surname>Goth</surname>
+        <contact>
+            <address>
+                <city>Brighton</city>
+                <street>Old</street>
+                <apartment>14</apartment>
+            </address>
+            <phoneNumber>533109456</phoneNumber>
+        </contact>
+    </string>
+</elo>
