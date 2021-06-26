@@ -32,6 +32,7 @@ public class JsonConverter {
     public List<String> visitedJsonXmlNodes = new ArrayList<>();
 
     public String convertFromCsvToJson(String mainNodeName, String csv) {
+        json="";
         List<CsvNodeDto> csvNodes = getCsvNodesObjects(csv);
         String json;
         json = new StringBuilder("{\n\"" + mainNodeName + "\" : [\n").toString();
@@ -111,6 +112,7 @@ public class JsonConverter {
 
 
     public String convertFromXmlToJson(String xml) throws ParserConfigurationException, IOException, SAXException {
+        json="";
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
 
@@ -131,6 +133,8 @@ public class JsonConverter {
         visitXmlToJsonChildNodes(nList);
         json = new StringBuilder(json).append("}\n").toString();
         json = json.replace(",\n}", "\n}");
+        alreadyVisitedAttr = new HashMap<>();
+        alreadyVisited = new ArrayList<>();
         return json;
     }
 
@@ -333,12 +337,13 @@ public class JsonConverter {
                     }
                 }
                 NodeList nl = ((Element) node).getElementsByTagName("*");
-                if (nl.getLength() > 0) {
+                if (nl.getLength() > 0 && !alreadyVisited.contains(node)) {
                     json = new StringBuilder(json).append("\"" + node.getNodeName() + "\" : {\n").toString();
                     visitXmlToJsonChildNodes(nl);
                     json = new StringBuilder(json).append("},\n").toString();
+                    this.alreadyVisited.add(node);
                 } else {
-                    if (!alreadyVisited.contains(node)) {
+                    if (!alreadyVisited.contains(node) && !node.getTextContent().equals("")) {
                         json = new StringBuilder(json).append("\"" + node.getNodeName() + "\" : \"" + node.getTextContent() + "\",\n").toString();
                         this.alreadyVisited.add(node);
                     }
