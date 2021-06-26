@@ -1,5 +1,5 @@
-<elo>
-    <string>
+<root>
+    <row>
         <id>1d3e-1d3e-1d3e</id>
         <name>John</name>
         <surname>Smith</surname>
@@ -11,8 +11,8 @@
             </address>
             <phoneNumber>534129079</phoneNumber>
         </contact>
-    </string>
-    <string>
+    </row>
+    <row>
         <id>1d3d-1d3d-1d3d</id>
         <name>Anna</name>
         <surname>Goth</surname>
@@ -24,5 +24,5 @@
             </address>
             <phoneNumber>533109456</phoneNumber>
         </contact>
-    </string>
-</elo>
+    </row>
+</root>

@@ -19,17 +19,17 @@ public class ConverterController {
     private final JsonConverter jsonConverter;
     private final CsvXmlConverter csvConverter;
 
-    @PostMapping("/xml/converter/json")
+    @PostMapping(value = "/xml/converter/json", produces= MediaType.APPLICATION_JSON_VALUE)
     public String convertXmlToJson(@RequestBody String xml) throws IOException, SAXException, ParserConfigurationException {
         return jsonConverter.convertFromXmlToJson(xml);
     }
 
-    @PostMapping("/json/converter/xml")
+    @PostMapping(value = "/json/converter/xml", produces= MediaType.APPLICATION_XML_VALUE)
     public String convertJsonToXml(@RequestBody String json) throws JSONException {
         return jsonConverter.convertFromJsonToXml(json);
     }
 
-    @PostMapping("/csv/converter/json/{mainNode}")
+    @PostMapping(value = "/csv/converter/json/{mainNode}", produces= MediaType.APPLICATION_JSON_VALUE)
     public String convertCsvToJson(@PathVariable(name = "mainNode") String mainNode, @RequestBody String csv) {
         return jsonConverter.convertFromCsvToJson(mainNode, csv);
     }
