@@ -33,10 +33,10 @@ public class JsonConverter {
 
     public String convertFromCsvToJson(String mainNodeName, String csv) {
         json="";
+        csv = csv.replace("\n","\r\n");
         List<CsvNodeDto> csvNodes = getCsvNodesObjects(csv);
         String json;
         json = new StringBuilder("{\n\"" + mainNodeName + "\" : [\n").toString();
-        //csv = csv.replace("\n","\r\n");
         String[] lines = csv.split("\n");
         for (int i = 1; i < lines.length; i++) {
             String[] columns = lines[i].split(",");
