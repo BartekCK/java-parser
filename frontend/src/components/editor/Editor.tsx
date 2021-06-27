@@ -15,10 +15,11 @@ type Props = {
     text: string;
     setText?: React.Dispatch<string>;
     readonly?: boolean;
+    children?: React.ReactNode;
 };
 
 const Editor: React.FC<Props> = (props: Props) => {
-    const { onChangeType, readonly, selectValue, text, setText } = props;
+    const { onChangeType, readonly, selectValue, text, setText, children } = props;
 
     const onChange = (event) => {
         if (setText) {
@@ -30,6 +31,7 @@ const Editor: React.FC<Props> = (props: Props) => {
         <div className="editor--container">
             <div className="header">
                 <Select onChange={onChangeType} value={selectValue} />
+                {children}
             </div>
             <textarea value={text} className="editor" readOnly={readonly} onChange={onChange} />
         </div>

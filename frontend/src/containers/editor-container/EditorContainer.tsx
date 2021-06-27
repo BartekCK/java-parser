@@ -7,6 +7,7 @@ import { Parser } from '../../core/types/enums';
 import { ApiInstance } from '../../api/config';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import InputComponent from '../../components/input-component';
 
 const EditorContainer = React.forwardRef((props, divRef: React.RefObject<HTMLDivElement>) => {
     const [convertFrom, setConvertFrom] = React.useState<Parser>(Parser.json);
@@ -14,6 +15,15 @@ const EditorContainer = React.forwardRef((props, divRef: React.RefObject<HTMLDiv
 
     const [textBefore, setTextBefore] = React.useState<string>('');
     const [textAfter, setTextAfter] = React.useState<string>('');
+
+    const [mainNode, setMainNode] = React.useState<string>('');
+    const [elName, setElName] = React.useState<string>('');
+
+    const shouldBeMainNode = convertFrom === Parser.csv || convertTo === Parser.csv || convertTo === Parser.xml;
+    const shouldBeElementName =
+        shouldBeMainNode &&
+        (convertFrom === Parser.csv || convertFrom === Parser.xml) &&
+        (convertTo === Parser.csv || convertTo === Parser.xml);
 
     const { t } = useTranslation();
 
@@ -29,14 +39,14 @@ const EditorContainer = React.forwardRef((props, divRef: React.RefObject<HTMLDiv
     };
 
     const handleSubmit = async (): Promise<void> => {
-        let mainNode = `${convertFrom === Parser.csv || convertTo === Parser.csv ? '/root' : ''}`;
+        let path = `${shouldBeMainNode ? `/${mainNode}` : ''}`;
 
-        if (mainNode.length && (convertFrom === Parser.xml || convertTo === Parser.xml)) {
-            mainNode += '/row';
+        if (shouldBeElementName) {
+            path += `/${elName}`;
         }
 
         try {
-            const { data } = await ApiInstance.post(`${convertFrom}/converter/${convertTo}${mainNode}`, textBefore, {
+            const { data } = await ApiInstance.post(`${convertFrom}/converter/${convertTo}${path}`, textBefore, {
                 headers: {
                     'Content-Type': 'text/plain',
                 },
@@ -60,7 +70,20 @@ const EditorContainer = React.forwardRef((props, divRef: React.RefObject<HTMLDiv
             <button className="btn btn-primary" onClick={handleSubmit} disabled={isDisabled}>
                 <i className="refresh fa fa-refresh" aria-hidden="true" />
             </button>
-            <Editor text={textAfter} onChangeType={handleChange(setConvertTo)} selectValue={convertTo} readonly />
+            <Editor text={textAfter} onChangeType={handleChange(setConvertTo)} selectValue={convertTo} readonly>
+                {shouldBeMainNode && (
+                    <div>
+                        <span>{t('common.nodeName')}:</span>
+                        <InputComponent onChange={(event) => setMainNode(event.target.value)} value={mainNode} />
+                    </div>
+                )}
+                {shouldBeElementName && (
+                    <div>
+                        <span>{t('common.elementName')}:</span>
+                        <InputComponent onChange={(event) => setElName(event.target.value)} value={elName} />
+                    </div>
+                )}
+            </Editor>
         </div>
     );
 });

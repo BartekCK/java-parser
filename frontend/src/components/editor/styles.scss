@@ -2,6 +2,11 @@
   margin-right: 15px;
   flex: 1;
 
+  > .header{
+    display: flex;
+    align-items: flex-end;
+  }
+
   > .editor {
     height: 650px;
     width: 100%;

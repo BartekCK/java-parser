@@ -6,7 +6,9 @@
         "lastActivity": "Aktywność",
         "upload": "Wybierz pliki",
         "okay": "Okej",
-        "convertTo": "Konwertuj na"
+        "convertTo": "Konwertuj na",
+        "nodeName": "Nazwa węzła",
+        "elementName": "Nazwa elementu"
       },
       "message": {
         "uploadLabel": "lub upuść pliki tutaj",
@@ -28,7 +30,9 @@
         "lastActivity": "Last Activity",
         "upload": "Upload files",
         "okay": "Okay",
-        "convertTo": "Convert to"
+        "convertTo": "Convert to",
+        "nodeName": "Node name",
+        "elementName": "Element name"
       },
       "message": {
         "uploadLabel": "or drop files here",
