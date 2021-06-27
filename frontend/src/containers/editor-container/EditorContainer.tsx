@@ -18,10 +18,10 @@ const EditorContainer = React.forwardRef((props, divRef: React.RefObject<HTMLDiv
     const { t } = useTranslation();
 
     const isDisabled: boolean = React.useMemo(() => {
-        if(textBefore.length === 0){
+        if (textBefore.length === 0) {
             return true;
         }
-        return convertFrom === convertTo
+        return convertFrom === convertTo;
     }, [convertFrom, convertTo, textBefore]);
 
     const handleChange = (setterFunc) => (event): void => {
@@ -29,8 +29,14 @@ const EditorContainer = React.forwardRef((props, divRef: React.RefObject<HTMLDiv
     };
 
     const handleSubmit = async (): Promise<void> => {
+        let mainNode = `${convertFrom === Parser.csv || convertTo === Parser.csv ? '/root' : ''}`;
+
+        if (mainNode.length && (convertFrom === Parser.xml || convertTo === Parser.xml)) {
+            mainNode += '/row';
+        }
+
         try {
-            const { data } = await ApiInstance.post(`${convertFrom}/converter/${convertTo}`, textBefore, {
+            const { data } = await ApiInstance.post(`${convertFrom}/converter/${convertTo}${mainNode}`, textBefore, {
                 headers: {
                     'Content-Type': 'text/plain',
                 },
