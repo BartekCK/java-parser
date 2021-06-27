@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith(SpringExtension.class)
 class YamlConverterTest {
 
-    @Test
+/*    @Test
     void shouldConvertYamlToJson() throws JsonProcessingException {
         String yaml = "receipt: \"Oz-Ware Purchase Invoice\"\n" +
                 "number: 2007\n" +
@@ -29,6 +29,6 @@ class YamlConverterTest {
         String convertedYaml = jsonConverter.convertFromJsonToYaml(json);
 
         assertEquals(convertedYaml.trim(), yaml.trim());
-    }
+    }*/
 
 }

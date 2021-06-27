@@ -1,19 +1,30 @@
 {
-  "books": [
-     {
-      "edited" : "whenever",
-      "title" : "Some title",
-      "description" : "some description",
-      "author" : {
-        "id" : "1",
-        "name" : "some author name"
-      },
-      "buyer" : {
-        "id" : "2",
-        "name" : "some buyer name"
-      },
-      "review" : "nice book",
-      "review" : "this book sucks",
-      "review" : "amazing work"
-    }]
+  "employees": [
+    {
+      "id": "1d3e-1d3e-1d3e",
+      "name": "John",
+      "surname": "Smith",
+      "contact": {
+        "address": {
+          "city": "London",
+          "street": "New",
+          "apartment": "123a"
+        },
+        "phoneNumber": 534129079
+      }
+    },
+    {
+      "id": "1d3d-1d3d-1d3d",
+      "name": "Anna",
+      "surname": "Goth",
+      "contact": {
+        "address": {
+          "city": "Brighton",
+          "street": "Old",
+          "apartment": 14
+        },
+        "phoneNumber": 533109456
+      }
+    }
+  ]
 }
