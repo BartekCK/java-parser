@@ -20,7 +20,7 @@ module.exports = {
         host: 'localhost',
         open: true,
         historyApiFallback: true,
-        port: 3000,
+        port: 3001,
     },
     module: {
         rules: [
