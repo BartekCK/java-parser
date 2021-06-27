@@ -39,7 +39,7 @@ const EditorContainer = React.forwardRef((props, divRef: React.RefObject<HTMLDiv
 
             setTextAfter(convertTo === Parser.json ? JSON.stringify(data) : data);
         } catch (e) {
-            toast.error(t('message.errorSize'));
+            toast.error(t('message.somethingGoWrong'));
         }
     };
 

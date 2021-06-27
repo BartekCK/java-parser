@@ -15,7 +15,8 @@
           "content": "W tym celu wciśnij przycisk <b>\"WYBIERZ PLIKI\"</b>. Akcja ta umożliwi wybór dowolnego pliku z Twojego komputera w celu jego konwersji. Możesz również przeciągnąć wybrany plik z prywatnego systemu plików, a następnie upuść w miejsce poniżej."
         },
         "errorExtension": "Rozszerzenie pliku nie jest dozwolone",
-        "errorSize": "Maksymalny rozmiar pliku to 500 kilobajtów"
+        "errorSize": "Maksymalny rozmiar pliku to 500 kilobajtów",
+        "somethingGoWrong": "Ups ... Coś poszło nie tak"
       },
       "header": "Konwertuj szybko i łatwo pliki bądź kod pomiędzy wybranymi formatami"
     }
@@ -36,7 +37,8 @@
           "content": "To do this, press the <b> \"UPLOAD FILES\" </b> button. This action will allow you to select any file from your computer for conversion. You can also drag the selected file from your private file system and then drop it below."
         },
         "errorExtension": "The file extension is not allowed",
-        "errorSize": "The maximum file size is 500 kilobytes"
+        "errorSize": "The maximum file size is 500 kilobytes",
+        "somethingGoWrong": "Ups ... Something went wrong"
       },
       "header": "Convert files or code quickly and easily between selected formats"
     }

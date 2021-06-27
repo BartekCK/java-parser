@@ -60,14 +60,6 @@ const Navigation = React.forwardRef((props, wrapperRef: React.RefObject<IRefWrap
                         ref={wrapperRef.current?.editorRef}
                     />
                 </li>
-                <li>
-                    <NavElement
-                        onClick={handleLiClick}
-                        routeName="/"
-                        name={t('common.lastActivity')}
-                        ref={wrapperRef.current?.activityRef}
-                    />
-                </li>
             </ul>
             <LanguageSwitcher />
         </nav>
