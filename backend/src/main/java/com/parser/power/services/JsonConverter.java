@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import com.parser.power.models.CsvNodeDto;
 import lombok.RequiredArgsConstructor;
+import org.json.XML;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
@@ -146,8 +147,9 @@ public class JsonConverter {
     }
 
     public String convertFromJsonToXml(String mainNode, String json) throws JSONException {
-        JSONObject jsonObj = new JSONObject(json);
-        return getJsonXmlDocs(jsonObj,  mainNode);
+        org.json.JSONObject jsonObj = new org.json.JSONObject(json);
+        getJsonXmlDocs(new JSONObject(),  mainNode);
+        return XML.toString(jsonObj);
     }
 
     public String getJsonXmlDocs(JSONObject ja, String main) throws JSONException {
