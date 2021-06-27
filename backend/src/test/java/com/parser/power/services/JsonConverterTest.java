@@ -29,18 +29,7 @@ public class JsonConverterTest {
     private CsvXmlConverter csvXmlConverter;
 
     @Test
-    void shouldConvertFromCsvToXml() throws IOException, JSONException {
-        //given
-        String request = new String(getClass().getClassLoader().getResourceAsStream("csv/example3.csv").readAllBytes());
-        String expectedResponse = new String(getClass().getClassLoader().getResourceAsStream("xml/example3.xml").readAllBytes());
-        //when
-        String result = csvXmlConverter.convertFromCsvToXml("root", "row", request);
-        //then
-        JSONAssert.assertEquals(expectedResponse, result, false);
-    }
-
-    @Test
-    void shouldConvertFromXmlToCsv() throws IOException, JSONException, ParserConfigurationException, SAXException, org.springframework.boot.configurationprocessor.json.JSONException {
+    void shouldConvertFromXmlToCsv() throws IOException, ParserConfigurationException, SAXException, org.springframework.boot.configurationprocessor.json.JSONException {
         //given
         String request = new String(getClass().getClassLoader().getResourceAsStream("xml/example3.xml").readAllBytes());
         String expectedResponse = new String(getClass().getClassLoader().getResourceAsStream("csv/example3.csv").readAllBytes());
@@ -50,6 +39,16 @@ public class JsonConverterTest {
         Assertions.assertEquals(expectedResponse, result);
     }
 
+    @Test
+    void shouldConvertFromCsvToXml() throws IOException, JSONException {
+        //given
+        String request = new String(getClass().getClassLoader().getResourceAsStream("csv/example3.csv").readAllBytes());
+        String expectedResponse = new String(getClass().getClassLoader().getResourceAsStream("xml/example3.xml").readAllBytes());
+        //when
+        String result = csvXmlConverter.convertFromCsvToXml("root", "row", request);
+        //then
+        JSONAssert.assertEquals(expectedResponse, result, false);
+    }
 
     @Test
     void shouldConvertFromXmlToJson() throws IOException, SAXException, ParserConfigurationException, JSONException {
@@ -76,8 +75,10 @@ public class JsonConverterTest {
     @Test
     void shouldConvertFromCsvToJson() throws IOException, JSONException {
         //given
-        String request = new String(getClass().getClassLoader().getResourceAsStream("csv/example3.csv").readAllBytes());
-        String expectedResponse = new String(getClass().getClassLoader().getResourceAsStream("json/example3.json").readAllBytes());
+        String request = new String(getClass().getClassLoader()
+                .getResourceAsStream("csv/example3.csv").readAllBytes());
+        String expectedResponse = new String(getClass().getClassLoader()
+                .getResourceAsStream("json/example3.json").readAllBytes());
         //when
         String result = jsonConverter.convertFromCsvToJson("employees", request);
         //then

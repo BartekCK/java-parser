@@ -15,6 +15,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping
 @RequiredArgsConstructor
+@CrossOrigin
 public class ConverterController {
 
     private final JsonConverter jsonConverter;
