@@ -8,5 +8,4 @@ export interface IRefWrapper {
     homeRef: React.RefObject<HTMLDivElement>;
     uploadRef: React.RefObject<HTMLDivElement>;
     editorRef: React.RefObject<HTMLDivElement>;
-    activityRef: React.RefObject<HTMLDivElement>;
 }
