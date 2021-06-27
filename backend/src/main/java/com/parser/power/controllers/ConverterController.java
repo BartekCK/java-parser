@@ -36,9 +36,9 @@ public class ConverterController {
         return yamlConverter.convertXmlToYaml(xml);
     }
 
-    @PostMapping(value = "/yaml/converter/xml", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String convertYamlToXml(@RequestBody String yaml) throws IOException, JSONException {
-        return yamlConverter.convertYamlToXml(yaml);
+    @PostMapping(value = "/yaml/converter/xml/{mainNode}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String convertYamlToXml(@PathVariable(name = "mainNode") String mainNode,@RequestBody String yaml) throws IOException, JSONException {
+        return yamlConverter.convertYamlToXml(mainNode, yaml);
     }
 
     @PostMapping(value = "/xml/converter/json", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -46,9 +46,9 @@ public class ConverterController {
         return jsonConverter.convertFromXmlToJson(xml);
     }
 
-    @PostMapping(value = "/json/converter/xml", produces = MediaType.APPLICATION_XML_VALUE)
-    public String convertJsonToXml(@RequestBody String json) throws JSONException {
-        return jsonConverter.convertFromJsonToXml(json);
+    @PostMapping(value = "/json/converter/xml/{mainNode}", produces = MediaType.APPLICATION_XML_VALUE)
+    public String convertJsonToXml(@PathVariable(name = "mainNode") String mainNode,@RequestBody String json) throws JSONException {
+        return jsonConverter.convertFromJsonToXml(mainNode, json);
     }
 
     @PostMapping(value = "/csv/converter/json/{mainNode}", produces = MediaType.APPLICATION_JSON_VALUE)

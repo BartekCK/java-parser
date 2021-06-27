@@ -36,9 +36,9 @@ public class YamlConverter {
         return convertJsonToYaml(json);
     }
 
-    public String convertYamlToXml(String yaml) throws IOException, JSONException {
+    public String convertYamlToXml(String mainNode, String yaml) throws IOException, JSONException {
         String json = convertYamlToJson(yaml);
-        return jsonConverter.convertFromJsonToXml(json);
+        return jsonConverter.convertFromJsonToXml(mainNode, json);
     }
 
     public String convertYamlToCsv(String mainNodeName, String yaml) throws IOException, JSONException {

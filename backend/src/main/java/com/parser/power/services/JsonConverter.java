@@ -145,9 +145,9 @@ public class JsonConverter {
 
     }
 
-    public String convertFromJsonToXml(String json) throws JSONException {
+    public String convertFromJsonToXml(String mainNode, String json) throws JSONException {
         JSONObject jsonObj = new JSONObject(json);
-        return getJsonXmlDocs(jsonObj, "book");
+        return getJsonXmlDocs(jsonObj,  mainNode);
     }
 
     public String getJsonXmlDocs(JSONObject ja, String main) throws JSONException {
